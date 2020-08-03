@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% load crispy_forms_tags %}
+{% load urlify  %}
+{% block head_title %}
+ {{block.super}} | {{instance.title}} 
+{% endblock head_title %}
+{% block content %}
+   <div class="container">
+      <div class="row">
+
+               <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
+                     <article class="bg-blog p-2 mb-2">
+                        {% if instance.image %}
+                           <img src="{{instance.image.url}}" alt=" {{instance.title}}" class="embed-responsive" />
+                        {% endif %}
+                           <h1> {{instance.title}}</h1>
+                           
+
+
+
+
+
+
+                        <div class="d-flex  flex-row  share">
+                           <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+                              <i class="fab fa-facebook"></i>
+                           </a>
+                           <a href="https://twitter.com/home?status={{instance.content |urlify}}%20%{{ request.build_absolute_uri }}">
+                              <i class="fab fa-twitter"></i>
+                           </a>
+                           <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{instance.title}}&summary={{instance.content |urlify}}&source={{ request.build_absolute_uri }}">
+                              <i class="fab fa-linkedin"></i>
+                           </a>
+                           <a href="https://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{instance.title}}">
+                              <i class="fab fa-reddit"></i>
+                           </a>
+                        </div>
+
+
+
+
+
+
+
+                           <div class="author d-flex flex-column">
+                                 <div class="author-image d-flex flex-row">
+                                        <div class="profile">
+                                             {% if instance.user.profile.image %}
+                                             <img class="profile-image" src="{{instance.user.profile.image.url}}" alt="{{instance.user}}" title="{{instance.user}}">
+                                             {% endif %}
+                                       </div>
+                                        <div class="author-name">
+                                            <h4>{{ instance.user }}</h4>
+                                      </div> 
+                                 </div>
+                                 
+                                 <div class="d-flex flex-row date">
+                                    {% if instance.draft %}
+                                    <span style="color:red">
+                                    مسودة 
+                                    </span> 
+                                    {% endif %}
+                                    
+                                    <span>
+                                    {{instance.publish}} ,
+                                    </span>
+                                    <small>
+                                       {% if instance.read_time|time:"i" <= "01" %}
+                                       1 دقيقة للقراءة
+                                       {% else %}
+                                       {{instance.read_time|time:"i"}} دقائق للقراءة
+                                       {% endif %}
+                                       
+                                       </small>
+                                    </div>
+                           </div>
+                           
+                          
+                           
+                          
+                              <div class="content-markdown">
+                              <p class="content-post"> {{instance.get_markdown}}</p> 
+                              </div>
+                           
+                     </article>
+                           {% if instance.user == request.user %}
+                           <div class="bg-blog p-3 mt-3 ">
+                              {% comment %} | linebreaks |safe{% endcomment %}
+                              <a class="pt-2 pb-2 btn btn-info" href="{% url 'posts:post_update' instance.slug  %}">تعديل</a>
+                              <a class="pt-2 pb-2 btn btn-danger" href="{% url 'posts:post_delete' instance.slug  %}">مسح</a>
+                           </div>
+                           {% endif %}
+
+
+                     
+
+                    <div id="x">
+                     {% include 'post/comment.html' %}
+                    </div>
+                     </div>
+                  
+               </div>
+               
+      </div>
+   </div>
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+$(document).ready(function () {
+
+
+
+
+
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+
+
+
+
+
+
+
+
+$("#comments-form").submit(function(event){
+        event.preventDefault();
+        var form = $("#comments-form");
+        var formData = form.serialize();
+        var thisURL = form.attr('data-url')  || window.location.href // or set your own url
+        $.ajax({
+            type: "POST",
+            url: thisURL,
+            data: formData,
+            cache: false,
+            dataType: 'json',
+            success: function(data){
+                   data = data['form'] 
+                    $("#x").html(data);
+                    $(" textarea").val(' ');
+                    $(".comment-reply-btn").click(function () {
+                        //event.preventDefault();
+                        $(this).parent().next(".comment-reply").fadeToggle();
+                     });
+                },
+            error: function(e){
+               console.log(e);
+            },
+            
+        });
+    });
+
+
+
+
+
+
+
+});
+</script>
+
+{% endblock javascripts %}

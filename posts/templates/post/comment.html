@@ -1,0 +1,90 @@
+ {% load bootstrap4 %}
+ {% load crispy_forms_tags %}
+                <div class="bg-blog p-3 mt-2 mb-2">
+                        <h4>التعليقات</h4>
+                        {% if request.user.is_authenticated %}
+                        <form id="comments-form" method="POST" enctype="multipart/form-data" data-url="{{instance.get_absolute_url|safe }}">
+                                 {% csrf_token %}
+                                 {{ comment_form|crispy  }}
+                              {% buttons %}
+                                 <div class="submit_btn">
+                                     <button class="btn btn-blog w-100" type="submit">تعليق </button>
+                                  </div>
+                              {% endbuttons %}
+                           </form>
+                     {% else %}
+                        <p> لابد من تسجيل الدخول للتعليق
+                        {% comment %} <a href="{% url 'login' %}">login</a> {% endcomment %}
+                     {% endif %}
+                     </div>
+                     <div class="dd">
+                     {% for comment in comments %}
+                        <div class="bg-blog p-3 mt-3 mb-3">
+                           <div class="comment-content">
+                           <div class="author-image comment-user d-flex flex-row">
+                                        <div class="profile">
+                                             {% if comment.user.profile.image %}
+                                             <img class="profile-image" src="{{comment.user.profile.image.url}}" alt="{{comment.user}}" title="{{comment.user}}">
+                                             {% endif %}
+                                       </div>
+                                        <div class="author-name">
+                                            <h6>{{ comment.user }}</h6>
+                                      </div> 
+                                 </div>
+                              {% comment %} <h2> {{comment.user}}</h2> {% endcomment %}
+                              <small>{{comment.publish_at}}</small>
+                              <p>{{comment.get_markdown}}</p>
+                              <a href="#" class="comment-reply-btn">
+                                 {% if comment.children.count > 0 %}
+                                 {{comment.children.count}} تعليقا
+                                 {% elif comment.children.count == 0 %} 0 تعليقا
+                                 {% endif %}
+                                 <span class="slah">|</span> رد
+                                 <span class="slah">|</span>
+                                 <a href="{{comment.get_absolute_url}}">
+                                 عرض
+                                 </a>
+                                 {% if request.user == comment.user %}
+                              <span class="slah">|</span><a href="{{comment.get_delete_url}}" >مسح</a>
+                              {% endif %}
+                                 
+                              </a>
+                              </div>
+
+                             <div class="comment-reply">
+                                          {% for child_comment in comment.children  %}
+                                       <div class="ml-3 mt-3 reply-content">
+                                             <div class="author-image reply-user d-flex flex-row">
+                                                <div class="profile ">
+                                                      {% if child_comment.user.profile.image %}
+                                                      <img class="profile-image" src="{{child_comment.user.profile.image.url}}" alt="{{child_comment.user}}" title="{{child_comment.user}}">
+                                                      {% endif %}
+                                                </div>
+                                             <div class="author-name">
+                                                <h6>{{ child_comment.user }}</h6>
+                                             </div> 
+                                       </div>
+                                          <small>{{child_comment.publish_at}}</small>
+                                             <p>{{child_comment.get_markdown}}</p>
+                                             {% if request.user == child_comment.user %}
+                                             <a href="{{child_comment.get_delete_yrl}}" >مسح</a>
+                                             {% endif %}
+                                    </div>
+                                    
+                                    {% endfor %}
+                                    {% if request.user.is_authenticated %}
+                                    <form id="reply-form" method="POST"  data-url="{{instance.get_absolute_url|safe }}" enctype="multipart/form-data" class="form-reply">
+                                       {% csrf_token %}
+                                       {{ comment_form|crispy  }}
+                                       <input type="hidden" name="parent_id" value="{{comment.id}}" />
+                                    {% buttons %}
+                                       <div class="submit_btn">
+                                          <button class="btn btn-blog w-100" type="submit">رد</button>
+                                       </div>
+                                    {% endbuttons %}
+                                 </form>
+                                  {% endif %}
+                             </div>
+                             
+                           </div>
+                     {% endfor %}

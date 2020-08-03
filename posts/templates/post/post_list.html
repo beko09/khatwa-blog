@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% comment %} {% markdown_allowed %} {% endcomment %}
+{% block head_title %}
+all posts | {{block.super}}
+{% endblock head_title %}
+{% block content %}
+    
+    <div class="container">
+      <div class="row">
+      <div class="mt-3 mb-3 col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
+                   <div class="form-search">
+                        <form action="" method="get" class="w-100 form bg-blog">
+                            <input class="form-control" type="text" name="q" value="{{ request.GET.q }}" placeholder="ابحث عن مقال ...">
+                                <button class="btn btn-search" type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+            </div>
+      </div>
+      <div class="row">
+      {% if posts %}
+      {% for post in posts %}
+         <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
+         <div class="bg-blog p-3 mt-2 article">
+         {% if post.image %}
+            <img src="{{post.image.url}}" alt=" {{post.title}}" class="embed-responsive" />
+         {% endif %}
+         <a href="{{post.get_absolute_url}}">
+              <h1> {{post.title}}</h1>
+         </a> 
+         {% comment %} 
+         other method work url
+         <a href="{% url 'posts:post_detail' post.id %}">
+         <h1> {{post.title}}</h1>
+         </a>
+          {% endcomment %}
+        
+         {% comment %} 
+
+         other method work url
+         <a href="/post_detail/{{ post.id }}">
+         <h1> {{post.title}}</h1>
+         </a> 
+    <p> <span>{{post.publish_at|timesince}}</span></p>
+         {% endcomment %}
+    <p>{% if post.draft %}<span style="color:red">مسودة</span> {% endif %}<span>{{post.publish}}</span></p>
+    {% comment %} <p class="content-markdown"> {{post.content |markdown| truncatechars:130}}</p> {% endcomment %}
+    <div class="content-markdown">
+    <p> {{post.get_markdown|truncatechars_html:17}}</p>
+    </div>
+    <div>
+    <a href="{{post.get_absolute_url}}" class="btn-read">
+             قراءة المقال
+         </a> 
+    </div>
+   </div>
+   </div>
+   </div>
+   
+    {% endfor %}
+{% if posts.has_other_pages %}
+    <div class="pagination">
+            <div class="container">
+                <div class="row">
+                    <div class="mb-3 col-lg-6 col-md-6 col-sm-12 mx-auto ">
+                        <div class="step-links">
+                            {% if posts.has_previous %}
+                                <div class="page-pagination">
+                                    <a class="page" href="?{{page_request_var}}=1">&laquo; الاولي</a>
+                                    <a class="page" href="?{{page_request_var}}={{ posts.previous_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">رجوع</a>
+                                </div>
+                            {% endif %}
+
+                            {% comment %} <span class="current">
+                                Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+                            </span> {% endcomment %}
+
+                            {% if posts.has_next %}
+                                <div class="page-pagination">
+                                    <a class="page" href="?{{page_request_var}}={{ posts.next_page_number }}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}">التالي</a>
+                                    <a class="page" href="?{{page_request_var}}={{ posts.paginator.num_pages }}">الاخيرة &raquo;</a>
+                                </div>
+                            {% endif %}
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+   {% endif %}
+   {% else %}
+   <div class="container">
+        <div class="row">
+            <div class="mb-3 col-lg-6 col-md-6 col-sm-12 mx-auto">
+                        <div class=" bg-blog p-3">
+                                <p class="text-center w-100">لا توجد منشورات</p>
+                        </div>
+            </div>
+        </div>
+   </div>
+   {% endif %}
+{% endblock content %}
