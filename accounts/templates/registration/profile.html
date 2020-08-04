@@ -4,29 +4,54 @@
 
 <div class="container">
     <div class="row">
-        <div class="mt-3 mb-3 col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
-            <div class="blog bg-blog">
-                        <div class="summery_header">
-                            <h3>البروفايل</h3>
-                        </div>
-                        <div class="thumb">
-                            <img src="{{Profile.image.url}}" alt="{{profile.user}}"  class="job-img">
-                        </div>
-                        <div class="">
-                            <ul>
-                                <li>الاسم: <span>{{profile.user}}</span></li>
-                                <li>العنوان : <span>{{profile.about_us}} </span></li>
-                                <li>الايميل: <span>{{profile.user.email}}</span></li>
-                               
-                            </ul>
-                             
-                             <a href="{% url 'accounts:profile_edit'%}" class="boxed-btn3 w-100 mt-2">تعديل البروفايل</a>
-                         
-                        </div>
+        <div class="mt-3 mb-3 col-lg-6 col-md-6 col-sm-12  mt-4 mb-4">
+            <div class="bg-blog">
+                <div class="summery_header-profile">
+                    <div class="user-pro">
+                        {% if user.profile.image %}
+                        <img class="img-fluid rounded-circle mt-auto " src="{{user.profile.image.url}}"
+                            alt="{{user.username}}" title="{{user.username}}">
+                        {% endif %}
                     </div>
-                   
+                </div>
+                <div class="info-profile blog ">
+                    <ul class="mx-auto">
+                        <li>الاسم: <span>{{profile.user}}</span></li>
+                        <li>نبذة : <span>{{profile.about_us}} </span></li>
+                        <li>الايميل: <span>{{profile.user.email}}</span></li>
+
+                    </ul>
+                </div>
+                <a href="{% url 'accounts:profile_edit'%}" class="reset-pass w-100 mt-2">تعديل البروفايل</a>
+            </div>
+
+
+
+        </div>
+        <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+            <div class="bg-blog blog">
+                <div class="author-post">
+                    {% if posts %}
+                    <div class="d-flex">
+                        <h4>المقالات </h4>
+                        <span class="count-post">{{posts.count}}</span>
+                    </div>
+                    {% for post in posts  %}
+                    <ul>
+                        <li><a href="{{post.get_absolute_url}}">{{post.title}}</a></li>
+
+                    </ul>
+                    {% endfor %}
+                    {% else %}
+                    <div class="d-flex">
+                        <h4>المقالات </h4>
+                        <span class="count-post">{{posts.count}}</span>
+                    </div>
+                    <p> لاتوجد مقالات له !</p>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock content %}
-

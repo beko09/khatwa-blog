@@ -26,6 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls,name='admin'),
     path('', include('posts.urls', namespace = 'posts')),
     path('comments/', include('comments.urls', namespace = 'comments')),
+    path('', include('social_django.urls', namespace='social')),
     path('', include('pagedown.urls')),
 ]
 if settings.DEBUG:

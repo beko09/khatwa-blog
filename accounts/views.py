@@ -2,7 +2,7 @@ from django.shortcuts import render, reverse, redirect
 from .forms import RegisterForm, UserForm, ProfileForm
 from django.contrib.auth import authenticate, login
 from .models import Profile
-    
+from posts.models import Post  
 
 def register(request):
     if request.method == "POST":
@@ -26,9 +26,11 @@ def register(request):
 
 def profile(request):
     profile = Profile.objects.get(user=request.user)
+    posts = Post.objects.filter(user=profile.user)[:50]
 
     context = {
-        'profile': profile
+        'profile': profile,
+        'posts': posts,
     }
 
     return render(request, 'registration/profile.html', context)

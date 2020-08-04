@@ -27,7 +27,9 @@ project name===> khatwa blog
 
 body {
   font-family: "NeoSansArabic";
-  background-color: #f5f6f7;
+  background-color:#f5f7fa;
+  /* #f5f6f7; */
+  
   /* background-color: #f8f8f8;  */
   /* #f9faf5; */
   text-align: right;
@@ -184,7 +186,10 @@ blockquote::after{
 /*  start header */
 
 .header{
-  padding: 15px 0;
+  padding: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
     
 }
 .user {
@@ -196,18 +201,7 @@ blockquote::after{
   box-shadow: none;
 }
 
-.profile {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: 0 10px;
-}
 
-.profile img {
-  width: 100%;
-  height: 100%;
-}
 
 .dropdown-menu {
   text-align: right;
@@ -353,10 +347,7 @@ code{
   margin: 1rem 0;
   align-items: center;
 }
-.author-image .profile{
-  width: 50px;
-  height: 50px;
-}
+
 .date{
   align-items: center;
 }
@@ -377,10 +368,7 @@ code{
 .form-reply{
   margin-top: 1.5rem;
 }
-.reply-user .profile{
-  width: 30px;
-  height: 30px;
-}
+
 .reply-user .author-name h6{
   font-size: 1rem;
 }
@@ -402,17 +390,81 @@ code{
 }
 /*  end post detail */
 
+/*  start profile */
 
+.summery_header-profile{
+  position: relative;
+  height: 15rem;
+  background-color: #1b82c4;
+  background: repeating-conic-gradient(#1b82c4 0% 25%, #eee 0% 50%) 50%/ 60px 60px;
+}
+.user-pro{
+  position: absolute;
+  content: "";
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%,50%);
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 10px; 
+  border: 3px solid #1b82c4;
+}
+.user-pro img {
+  width: 100%;
+  height: 100%;
+}
+.info-profile {
+  margin-top: 4rem;
+}
+.reply-user .profile {
+  width: 30px;
+  height: 30px;
+}
+
+.author-image .profile {
+  width: 50px;
+  height: 50px;
+}
+
+.profile {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 10px;
+}
+
+.profile img {
+  width: 100%;
+  height: 100%;
+}
+.count-post{
+     background-color: #1b82c4;
+     color: white;
+     width: 20px;
+     height: 20px;
+         padding: 3px 0;
+     border-radius: 50%;
+     text-align: center;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     margin: 5px;
+     font-size: .9rem;
+}
+/*  end profile */
 
 /*  start pagination */
 
-.pagination{
+/* .pagination{
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-}
-.page-pagination{
+} */
+/* .page-pagination{
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -423,7 +475,44 @@ code{
   color: #fff;
   text-align: center;
   margin: 10px 0;
-
+  
+}
+*/
+.pagination_wrap {
+  text-align: center;
+  margin-top: 20px;
+}
+.pagination_wrap ul {
+  margin: 0px;
+  padding: 0px;
+}
+.pagination_wrap ul li {
+  display: inline-block;
+}
+.pagination_wrap ul li a {
+    width: 38px;
+    height: 38px;
+    border: 1px solid #EAEAEA;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    font-size: 16px;
+    text-align: center;
+    line-height: 38px;
+    display: inline-block;
+    color: #AAB1B7;
+    margin: 0 4px;
+    border: 0;
+    background: #E6F3FF;
+    color: #0A8CFF;
+ 
+}
+.pagination_wrap ul li a i {
+  line-height: 38px;
+}
+.pagination_wrap ul li a:hover {
+  border-color: #1b82c4;
+  color: #1b82c4;
 }
 
 /*  end pagination */
@@ -436,10 +525,11 @@ code{
 
 
 
+/*  start login with social media */
 
 /* style inputs and link buttons */
-input,
-.btn {
+.social-form input,
+.social-form .btn {
   width: 100%;
   padding: 12px;
   border: none;
@@ -447,15 +537,16 @@ input,
   margin: 5px 0;
   opacity: 0.85;
   display: inline-block;
-  font-size: 17px;
+  font-size: 1rem;
   line-height: 20px;
   text-decoration: none;
   /* remove underline from anchors */
 }
 
-input:hover,
-.btn:hover {
+.social-form input:hover,
+.social-form .btn:hover {
   opacity: 1;
+  color: white;
 }
 
 /* add appropriate colors to fb, twitter and google buttons */
@@ -473,52 +564,73 @@ input:hover,
   background-color: #dd4b39;
   color: white;
 }
+.github{
+  background-color: #000;
+  color: #fff;
+}
 
-/* style the submit button */
-input[type=submit] {
-  background-color: #4CAF50;
+.social-form .col{
+  padding: 0 4rem;
+}
+.social-title{
+  margin-bottom: 3rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.reset-pass{
+     background-color: #3e95cd;
+     padding: 1rem;
+     color: white;
+     border-bottom-left-radius: 6px;
+     border-bottom-right-radius: 6px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+
+}
+.reset-pass:hover{
   color: white;
-  cursor: pointer;
 }
-
-input[type=submit]:hover {
-  background-color: #45a049;
+.social-form  .btn{
+  font-size: .9rem;
+  display: flex;
+  margin-bottom: .8rem;
+  align-items: center;
+  justify-content: space-between;
 }
-
-/* Two-column layout */
-.col {
-  float: left;
-  width: 50%;
-  margin: auto;
-  padding: 0 50px;
-  margin-top: 6px;
+.social-form  .btn i{
+  margin: 6px;
 }
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+.social-form .social{
+  position: relative;
 }
-
+.social-form .soc{
+     padding: 0 2rem;
+}
 /* vertical line */
-.vl {
+.social::before {
+  content: "";
+  height: 100%;
+  left: 0;
   position: absolute;
-  left: 50%;
-  transform: translate(-50%);
-  border: 2px solid #ddd;
-  height: 175px;
+  border: 1px dashed #1b82c4;
 }
 
-/* text inside the vertical line */
-.vl-innertext {
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  border-radius: 50%;
-  padding: 8px 10px;
+/* text or inside the vertical line */
+.or{
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 2px solid #1b82c4;
+      border-radius: 50%;
+      left: 0;
+      width: 35px;
+      height: 35px;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 }
 
 /* hide some text on medium and large screens */
@@ -534,20 +646,26 @@ input[type=submit]:hover {
 }
 
 /* Responsive layout - when the screen is less than 650px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 650px) {
-  .col {
-    width: 100%;
-    margin-top: 0;
-  }
-
+@media screen and (max-width: 992px) {
+  /* .social-form  {
+    padding: 0 1rem;
+  } */
+  
   /* hide the vertical line */
-  .vl {
+  .social::before {
     display: none;
   }
-
+  .social-form .soc {
+    padding: 1rem;
+  }
+.or{
+  display: none;
+}
   /* show the hidden text on small screens */
   .hide-md-lg {
     display: block;
     text-align: center;
   }
 }
+
+/*  end login with social media */

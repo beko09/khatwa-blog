@@ -3,33 +3,62 @@
 {% block content %}
 
 <div class="container">
-    <div class="row">
-        <div class="mt-3 mb-3 col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
-            <div class="blog bg-blog">
-                {% if form.errors %}
-                  <p>اسم المستخدم وكلمة المرور غير متطابقين. حاول مرة اخرى.</p>
-                {% endif %}
-                
-                {% if next %}
-                  {% if user.is_authenticated %}
-                    <p>حسابك ليس لديه حق الوصول إلى هذه الصفحة. المضي قدما،
-                    يرجى تسجيل الدخول بحساب لديه حق الوصول.</p>
-                  {% else %}
-                    <p>يرجى تسجيل الدخول لرؤية هذه الصفحة.</p>
-                  {% endif %}
-                {% endif %}
-                
-                <form method="post" action="{% url 'login' %}">
-                  {% csrf_token %}
-                  {% bootstrap_form form %}
-                  <input type="submit" value="دخول" class="btn-blog w-100" />
-                  <input type="hidden" name="next" value="{{ next }}" />
-                </form>
-                
-                {# Assumes you setup the password_reset view in your URLconf #}
-                <p><a href="{% url 'password_reset' %}"> نسيت كلمة السر ؟</a></p>
+  <div class="row">
+    <div class="mt-3 mb-3 col-lg-8 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
+      <div class="blog bg-blog">
+        {% if form.errors %}
+        <p>اسم المستخدم وكلمة المرور غير متطابقين. حاول مرة اخرى.</p>
+        {% endif %}
+
+        {% if next %}
+        {% if user.is_authenticated %}
+        <p>حسابك ليس لديه حق الوصول إلى هذه الصفحة. المضي قدما،
+          يرجى تسجيل الدخول بحساب لديه حق الوصول.</p>
+        {% else %}
+        <p>يرجى تسجيل الدخول لرؤية هذه الصفحة.</p>
+        {% endif %}
+        {% endif %}
+
+        <form method="post" action="{% url 'login' %}" class="social-form">
+          {% csrf_token %}
+          <h3 class="text-center social-title">تسجيل الدخول باستخدام وسائل التواصل الاجتماعي أو يدويًا</h3>
+
+
+          <div class="row">
+
+            <div class="col-lg-6 col-md-12 col-sm-12 social soc">
+              <span class="or">أو</span>
+              <a href='{% url "social:begin" "facebook" %}' class="fb btn">
+                تسجيل الدخول باستخدام الفيسبوك <i class="fab fa-facebook"></i>
+              </a>
+              <a href='{% url "social:begin" "twitter" %}' class="twitter btn">
+                تسجيل الدخول باستخدام تويتر <i class="fab fa-twitter"></i>
+              </a>
+              <a href='{% url "social:begin" "google-oauth2" %}' class="google btn"> تسجيل الدخول باستخدام Google+ <i
+                  class="fab fa-google">
+                </i>
+              </a>
+              <a href='{% url "social:begin" "github" %}' class="github btn">تسجيل الدخول باستخدام github<i
+                  class="fab fa-github">
+                </i>
+              </a>
             </div>
-        </div>
+            <div class="col-lg-6 col-md-12 col-sm-12 soc">
+              <div class="hide-md-lg">
+                <p>أو سجل يدويًا </p>
+              </div>
+              {% bootstrap_form form %}
+              <input type="submit" value="دخول" class="btn-blog w-100" />
+              <input type="hidden" name="next" value="{{ next }}" />
+            </div>
+          </div>
+        </form>
+
+
+      </div>
+      {# Assumes you setup the password_reset view in your URLconf #}
+      <p><a class="reset-pass text-center w-100" href="{% url 'password_reset' %}"> نسيت كلمة السر ؟</a></p>
     </div>
+  </div>
 </div>
 {% endblock content %}
