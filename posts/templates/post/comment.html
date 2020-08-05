@@ -24,7 +24,7 @@
           <div class="author-image comment-user d-flex flex-row">
              <div class="profile">
                 {% if comment.user.profile.image %}
-                <a href="{% url 'accounts:profile' %}"> <img class="profile-image"
+                <a href="{% url 'accounts:profile' comment.user %}"> <img class="profile-image"
                       src="{{comment.user.profile.image.url}}" alt="{{comment.user}}" title="{{comment.user}}"></a>
                 {% endif %}
              </div>
@@ -61,7 +61,7 @@
              <div class="author-image reply-user d-flex flex-row">
                 <div class="profile ">
                    {% if child_comment.user.profile.image %}
-                   <a href="{% url 'accounts:profile' %}"> <img class="profile-image"
+                   <a href="{% url 'accounts:profile' child_comment.user %}"> <img class="profile-image"
                          src="{{child_comment.user.profile.image.url}}" alt="{{child_comment.user}}"
                          title="{{child_comment.user}}"></a>
                    {% endif %}

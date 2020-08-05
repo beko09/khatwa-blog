@@ -44,6 +44,7 @@
       <div class="header">
         <nav class="navbar">
           <a class="nav-link" href="{% url 'posts:post_list'  %}">المقالات</a>
+          <a class="nav-link" href="{% url 'about:about'  %}">عن خطوة</a>
           {% if perms.posts.add_post %}
           <a class="nav-link" href="{% url 'posts:create'  %}">انشاء</a>
           {% endif %}
@@ -118,7 +119,7 @@
                     <a href="{% url 'posts:post_list' %}">لينك مساعد بس</a>
                   </li>
                   <li>
-                    <a href="{% url 'posts:post_list' %}">لينك مساعد بس</a>
+                    <a href="{% url 'about:about'  %}">عن خطوة</a>
                   </li>
                   <li>
                     <a href="{% url 'posts:post_list' %}">لينك مساعد بس</a>

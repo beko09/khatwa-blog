@@ -32,7 +32,7 @@ class Post(models.Model):
         User, related_name='Post_user', on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     description = models.CharField(max_length=100)
-    slug = models.SlugField(null=True, blank=True)  # unique=True
+    slug = models.SlugField(null=True, blank=True ,allow_unicode=True)  # unique=True
     image = models.ImageField(upload_to=upload_location, null=True, blank=True,
                               height_field="height_field", width_field="width_field")
     height_field = models.IntegerField(default=0)

@@ -14,7 +14,7 @@ $(document).ready(function () {
   //  set preview
   let title = $("#id_title");
   let content = $("#wmd-input-id_content");
-  //   let image = $("#id_image");
+  // let image = $("#id_image");
   // console.log(image.val());
   // $("#preview-title").text(title.val());
   // $("#preview-content").html(marked(content.val()));
@@ -45,18 +45,24 @@ $(document).ready(function () {
   });
 
 
-  // function setImage(value) {
-  //   if (value) {
-  //     var markContent = marked(value)
-  //     $("#preview-content").html(markContent);
-  //   }
-  //   $("#preview-content img").each(function () {
 
-  //     $(this).addClass("embed-responsive");
-  //   });
+  // document.getElementById("id_image").onChange = function (evt) {
+  //   var tgt = evt.target || window.event.srcElement;
+  //   var files = tgt.files;
+  //   if (FileReader && files && files.length) {
+  //     var fr = new FileReader();
+  //     console.log("=====", fr.result);
+  //     // fr.onload = function () {
+  //     //   document.getElementById("img").src = fr.result;
+
+  //     // }
+  //     fr.readAsDataURL(files[0])
+  //   }
   // };
-  // setImage(content.val());
-  // content.keyup(function () {
+
+
+
+  // image.keyup(function () {
   //   var newContent = $(this).val()
   //   setImage(newContent)
   // });

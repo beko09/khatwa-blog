@@ -85,13 +85,13 @@ body {
   color: #f7f6f3;
 }
 
-input[type="file"]::-webkit-file-upload-button {
+/* input[type="file"]::-webkit-file-upload-button {
   visibility: hidden;
   z-index: 99;
-}
+} */
 
 
-input[type="file"]::before {
+/* input[type="file"]::before {
   z-index: 999;
   content: ' حمل الصورة المراد تحميلها';
   display: inline-block;
@@ -99,14 +99,14 @@ input[type="file"]::before {
   border-radius: 3px;
   padding:.7rem;
   outline: none;
-  width: 100%;
+  width: 30%;
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;
   font-weight: 700;
   font-size: 1rem;
   color: #6c818d;
-}
+} */
 .form-check-label {
   margin-right: 1rem;
 }
@@ -337,6 +337,14 @@ code{
   /* width: 540px; */
   width: 100%;
   margin-bottom: 2rem;
+}
+.article a h1{
+  margin-top: .5rem;
+}
+.user-post{
+  color: #1b82c4;
+  font-weight: bold;
+  margin-right: .2rem;
 }
 .share {
   margin: 1rem 0;

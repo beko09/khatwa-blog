@@ -21,11 +21,12 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/', include('accounts.urls', namespace='accounts')),
+    path('', include('django.contrib.auth.urls')),
+    path('', include('accounts.urls', namespace='accounts')),
     path('admin/', admin.site.urls,name='admin'),
     path('', include('posts.urls', namespace = 'posts')),
     path('comments/', include('comments.urls', namespace = 'comments')),
+    path('', include('about.urls', namespace = 'about')),
     path('oauth/', include('social_django.urls', namespace='social')),
     path('', include('pagedown.urls')),
 ]

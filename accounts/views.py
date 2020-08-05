@@ -28,7 +28,7 @@ def register(request):
 def profile(request, username):
     username = get_object_or_404(User, username=username)
     profile = Profile.objects.get(user=username)
-    posts = Post.objects.filter(user=profile.user)[:50]
+    posts = Post.objects.filter(user=username)[:50]
 
     context = {
         'profile': profile,

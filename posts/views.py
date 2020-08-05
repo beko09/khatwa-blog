@@ -66,6 +66,9 @@ def post_home(request):
     #     context = {
     #         'title': 'title user'
     #     }
+    if request.is_ajax():
+        html = render_to_string('post/post_results.html',context,request=request)
+        return JsonResponse({'posts':html})
     return render(request, 'post/post_list.html', context)
     
 
@@ -154,7 +157,6 @@ def post_update(request, slug):
 
     context = {
         'form': form,
-        'title': title
     }
     return render(request, 'post/edit-post.html', context)
 

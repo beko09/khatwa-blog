@@ -9,7 +9,7 @@ all posts | {{block.super}}
         <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
             <div class="form-search">
                 <form action="" method="get" class="w-100 form bg-blog">
-                    <input class="form-control" type="text" name="q" value="{{ request.GET.q }}"
+                    <input id="search" class="form-control" type="text" name="q" value="{{ request.GET.q }}"
                         placeholder="ابحث عن مقال ...">
                     <button class="btn btn-search" type="submit"><i class="fa fa-search"></i></button>
                 </form>
@@ -18,90 +18,43 @@ all posts | {{block.super}}
     </div>
 
 
-        {% if posts %}
-        {% for post in posts %}
-        <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
-            <div class="bg-blog p-3 mt-2 article">
-                {% if post.image %}
-                <img src="{{post.image.url}}" alt=" {{post.title}}" class="embed-responsive" />
-                {% endif %}
-                <a href="{{post.get_absolute_url}}">
-                    <h1> {{post.title}}</h1>
-                </a>
-                <div class="user-post">
-                    <a href="{% url 'accounts:profile' post.user %}">
-                        <h6> {{post.user}}</h6>
-                    </a>
-                </div>
-                {% comment %}
-                other method work url
-                <a href="{% url 'posts:post_detail' post.id %}">
-                    <h1> {{post.title}}</h1>
-                </a>
-                {% endcomment %}
-
-                {% comment %}
-
-                other method work url
-                <a href="/post_detail/{{ post.id }}">
-                    <h1> {{post.title}}</h1>
-                </a>
-                <p> <span>{{post.publish_at|timesince}}</span></p>
-                {% endcomment %}
-                <p>{% if post.draft %}<span style="color:red">مسودة</span> {% endif %}<span>{{post.publish}}</span></p>
-                {% comment %} <p class="content-markdown"> {{post.content |markdown| truncatechars:130}}</p>
-                {% endcomment %}
-                <div class="content-markdown">
-                    <p> {{post.get_markdown|truncatechars_html:17}}</p>
-                </div>
-                <div>
-                    <a href="{{post.get_absolute_url}}" class="btn-read">
-                        قراءة المقال
-                    </a>
-                </div>
-            </div>
+       <div class="posts">
+        {% include 'post/post_results.html' %}
         </div>
-        </div>
-    {% comment %} </div>
-</div> {% endcomment %}
-    {% endfor %}
-    {% if posts.has_other_pages %}
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="pagination_wrap">
-                    <ul>
-                        {% if posts.has_previous %}
-                        <li><a href="?{{page_request_var}}={{posts.previous_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"> <i
-                                    class="fa fa-angle-right"></i> </a></li>
-                        {% endif %}
-
-                        {% for i in posts.paginator.page_range|slice:5 %}
-                        <li><a href="?{{page_request_var}}={{i}}"><span>{{i}}</span></a></li>
-                        {% endfor %}
-
-                        {% if posts.has_next %}
-                        <li><a href="?{{page_request_var}}={{posts.next_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"> <i class="fa fa-angle-left"></i>
-                            </a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-
-
-
-    {% endif %}
-
-    {% else %}
-        <div class="row">
-            <div class="mb-3 col-lg-6 col-md-6 col-sm-12 mx-auto">
-                <div class=" bg-blog p-3">
-                    <p class="text-center w-100">لا توجد مقالات</p>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-    </div>
     {% endblock content %}
+    
+{% block javascripts %}
+<script>
+   $(document).ready(function () {
+       
+      $("#search").keyup(function () {
+          //event.preventDefault();
+        var query = $(this).val();
+        var thisURL = '/?q=';
+       
+         $.ajax({
+            type: "GET",
+            url: thisURL,
+            data: {'q':query},
+            //cache: false,
+            dataType: 'json',
+            success: function (data) {
+               data = data['posts'];
+              // console.log("=====",query)
+               $(".posts").html(data);
+               //$("#search").val(' ');
+            },
+            error: function (e) {
+               console.log(e);
+            },
+
+         });
+      });
+
+
+
+
+   });
+</script>
+
+{% endblock javascripts %}
