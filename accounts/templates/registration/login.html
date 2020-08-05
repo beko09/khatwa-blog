@@ -28,10 +28,10 @@
 
             <div class="col-lg-6 col-md-12 col-sm-12 social soc">
               <span class="or">أو</span>
-              <a href='{% url "social:begin" "facebook" %}' class="fb btn">
+              <a href="{% url 'social:begin' 'facebook' %}" class="fb btn">
                 تسجيل الدخول باستخدام الفيسبوك <i class="fab fa-facebook"></i>
               </a>
-              <a href='{% url "social:begin" "twitter" %}' class="twitter btn">
+              <a href="{% url 'social:begin' 'twitter' %}" class="twitter btn">
                 تسجيل الدخول باستخدام تويتر <i class="fab fa-twitter"></i>
               </a>
               <a href='{% url "social:begin" "google-oauth2" %}' class="google btn"> تسجيل الدخول باستخدام Google+ <i

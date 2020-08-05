@@ -4,6 +4,8 @@ from .forms import CommentForm
 from django.contrib.contenttypes.models import ContentType
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 # Create your views here.
 
 
@@ -47,7 +49,7 @@ def comment_thread(request, id):
         # 'content_type': content_object.get_content_type,
         # 'object_id': content_id
     }
-    form = CommentForm(request.POST or None, initial=initial_data)
+    form = CommentForm(request.POST or None and request.is_ajax(), initial=initial_data)
     if form.is_valid():
         # print(form.cleaned_data)
         c_type = form.cleaned_data.get("content_type")
@@ -75,11 +77,14 @@ def comment_thread(request, id):
             parent=parent_obj
         )
 
-        return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
+        # return HttpResponseRedirect(new_comment.content_object.get_absolute_url())
 
 
     context = {
         'comment': obj,
         'form': form,
     }
+    if request.is_ajax():
+        html = render_to_string('comments/replay-comment.html',context,request=request)
+        return JsonResponse({'form':html})
     return render(request,'comments/comment_thread.html',context)

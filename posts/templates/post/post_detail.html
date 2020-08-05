@@ -2,6 +2,9 @@
 {% load bootstrap4 %}
 {% load crispy_forms_tags %}
 {% load urlify  %}
+{% block descri %}
+{{instance.description}}
+{% endblock descri %}
 {% block head_title %}
 {{block.super}} | {{instance.title}}
 {% endblock head_title %}
@@ -54,7 +57,7 @@
                      {% endif %}
                   </div>
                   <div class="author-name">
-                     <a href="{% url 'accounts:profile' %}">
+                     <a href="{% url 'accounts:profile' instance.user %}">
                         <h4>{{ instance.user }}</h4>
                      </a>
                   </div>
@@ -157,7 +160,7 @@
 
 
 
-      $("#comments-form").submit(function (event) {
+      $(document).on('submit', "#comments-form", function (event) {
          event.preventDefault();
          var form = $("#comments-form");
          var formData = form.serialize();
@@ -171,23 +174,47 @@
             success: function (data) {
                data = data['form']
                $("#x").html(data);
-               $(" textarea").val(' ');
-               $(".comment-reply-btn").click(function () {
-                  //event.preventDefault();
-                  $(this).parent().next(".comment-reply").fadeToggle();
-               });
+               $("textarea").val(' ');
             },
             error: function (e) {
                console.log(e);
             },
 
          });
+         //return false;
       });
 
 
 
+ $(document).on('submit', "#reply-form", function (event) {
+         event.preventDefault();
+         var form2 = $("#reply-form");
+         var formData = form2.serialize();
+         var thisURL = form2.attr('data-url') || window.location.href // or set your own url
+         $.ajax({
+            type: "POST",
+            url: thisURL,
+            data: formData,
+            cache: false,
+            dataType: 'json',
+            success: function (data) {
+               data = data['form']
+               $("#x").html(data);
+               //$("textarea").val(' ');
+               $(".comment-reply-btn").click(function (event) {
+               event.preventDefault();
+                  $(this).parent().parent().next(".comment-reply").fadeToggle();
+              //$(".comment-reply").fadeToggle();
+              });
+               $("textarea").val(' ');
+            },
+            error: function (e) {
+               console.log(e);
+            },
 
-
+         });
+         //return false;
+      });
 
 
    });

@@ -32,23 +32,25 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # libraries
     'jet.dashboard',
     'jet',
+    "bootstrap4",
+    'pagedown',
+    'markdown_deux',
+    'social_django',
+    'crispy_forms',
+    # my apps
     'accounts',
+    'posts',
+    'comments',
+    'about',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "bootstrap4",
-    # my apps
-    'pagedown',
-    'posts',
-    'comments',
-    'markdown_deux',
-    'crispy_forms',
-    'social_django',
 ]
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -57,7 +59,9 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
+
     'django.contrib.auth.backends.ModelBackend',
+
     
 )
 
@@ -176,6 +180,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
 
+LOGOUT_URL = '/accounts/logout'
+
 #  markdown
 
 PAGEDOWN_IMAGE_UPLOAD_ENABLED = True
@@ -200,3 +206,72 @@ ALLOW_UNICODE_SLUGS = True
 #         }
         
 # }
+
+
+
+
+SOCIAL_AUTH_GITHUB_KEY = '4559b5b539b46775d4a5'
+SOCIAL_AUTH_GITHUB_SECRET = 'ab4ef797b2b8379b91bb16f5a72c8e5b197c9864'
+
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
+
+
+
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '1177458862608837'  # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = '3320849d2e03f8d90d1f5501d4cd6b21'  # App Secret
+
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'informationsyst3m@gmail.com'
+EMAIL_HOST_PASSWORD = 'arhjaddfbhatagpp'
+DEFAULT_FROM_EMAIL = 'TestSite Team <informationsyst3m@gmail.com>'
+
+
+# jet theme
+# JET_DEFAULT_THEME = "green"
+JET_THEMES = [
+    {
+        'theme': 'default',
+        'color': '#47bac1',
+        'title' :'Default'
+    },
+    {
+        'theme': 'green',
+        'color': '#44b78b',
+        'title' :'Green'
+    },
+    {
+        'theme': 'light-green',
+        'color': '#2faa60',
+        'title' :'Light Green'
+    },
+    {
+        'theme': 'light-blue',
+        'color': '#47bac1',
+        'title' :'Light Blue'
+    },
+    {
+        'theme': 'light-gray',
+        'color': '#47bac1',
+        'title' :'Light Gray'
+    },
+    {
+        'theme': 'light-violet',
+        'color': '#47bac1',
+        'title' :'Light Violet'
+    },
+    # {
+    #     'theme': 'pink',
+    #     'color': 'pink',
+    #     'title' :'Pink'
+    # },
+]
+
+JET_SIDE_MENU_COMPACT = True

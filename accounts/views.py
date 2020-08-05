@@ -1,7 +1,8 @@
-from django.shortcuts import render, reverse, redirect
+from django.shortcuts import render, reverse, redirect, get_object_or_404
 from .forms import RegisterForm, UserForm, ProfileForm
 from django.contrib.auth import authenticate, login
 from .models import Profile
+from django.contrib.auth.models import User
 from posts.models import Post  
 
 def register(request):
@@ -24,8 +25,9 @@ def register(request):
     return render(request, 'registration/register.html', context)
     
 
-def profile(request):
-    profile = Profile.objects.get(user=request.user)
+def profile(request, username):
+    username = get_object_or_404(User, username=username)
+    profile = Profile.objects.get(user=username)
     posts = Post.objects.filter(user=profile.user)[:50]
 
     context = {
@@ -36,8 +38,9 @@ def profile(request):
     return render(request, 'registration/profile.html', context)
 
 
-def profile_edit(request):
-    profile = Profile.objects.get(user=request.user)
+def profile_edit(request,username):
+    username = get_object_or_404(User, username=username)
+    profile = Profile.objects.get(user=username)
 
     if request.method == 'POST':
         userForm = UserForm(request.POST, instance=request.user)

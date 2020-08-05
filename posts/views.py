@@ -16,9 +16,8 @@ from django.template.loader import render_to_string
 
 
 def post_create(request):
-    title = "انشاء المقال"
-    if not request.user.is_staff or not request.user.is_superuser:
-        raise Http404
+    # if not request.user.is_staff or not request.user.is_superuser:
+    #     raise Http404
     if not request.user.is_authenticated:
         raise Http404
     if request.method == "POST":
@@ -34,10 +33,9 @@ def post_create(request):
         form = PostForm()
 
     context = {
-        'form': form,
-        'title': title
+        'form': form
     }
-    return render(request, 'post/post_form.html', context)
+    return render(request, 'post/create-post.html', context)
 
 def post_home(request):
     # posts = Post.objects.filter(draft=False).filter(publish__lte=timezone.now())
@@ -136,7 +134,6 @@ def post_detail(request, slug=None):
 
 @staff_member_required
 def post_update(request, slug):
-    title = "حفظ التعديلات"
     # if not request.user.is_staff or not request.user.is_superuser:
     #     raise Http404
     post = get_object_or_404(Post, slug=slug)
@@ -159,7 +156,7 @@ def post_update(request, slug):
         'form': form,
         'title': title
     }
-    return render(request, 'post/post_form.html', context)
+    return render(request, 'post/edit-post.html', context)
 
 
 def post_delete(request, slug=None):

@@ -7,7 +7,7 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=50)
+    phone_number = models.CharField(max_length=15)
     image = models.ImageField(upload_to="profile/",
                               default="profile/default.jpg")
     about_us = models.TextField(max_length=200)
@@ -21,8 +21,10 @@ class Profile(models.Model):
     def save_user_profile(sender, instance, **kwargs):
         instance.profile.save()
     
-    def get_profile_url(self):
-        return reverse("accounts:profile")
+    # def get_profile_url(self):
+    #     return reverse("accounts:profile", kwargs={"user": self.user})
+
+   
 
     def __str__(self):
         return str(self.user)

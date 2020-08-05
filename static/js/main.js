@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 
 
   //  markdown
@@ -8,14 +8,14 @@ $(document).ready(function() {
   //   $(this).html(contentMark);
   // });
   $(".content-markdown img").each(function () {
-    
+
     $(this).addClass("embed-responsive");
   });
-//  set preview
+  //  set preview
   let title = $("#id_title");
   let content = $("#wmd-input-id_content");
-//   let image = $("#id_image");
-// console.log(image.val());
+  //   let image = $("#id_image");
+  // console.log(image.val());
   // $("#preview-title").text(title.val());
   // $("#preview-content").html(marked(content.val()));
   function setTitle(value) {
@@ -62,170 +62,183 @@ $(document).ready(function() {
   // });
 
 
-  //  comment and reply
-
-  $(".comment-reply-btn").click(function (event) {
-    event.preventDefault();
-    // $(".comment-reply").fadeToggle();
-    $(this).parent().next(".comment-reply").fadeToggle();
-  });
-  //  end comment and reply
-
-//  end block java scripts
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // style header boxShadow when  the scroll == 1000
 
   var header = $("header");
 
-  $(window).scroll(function() {
+  $(window).scroll(function () {
     if ($(this).scrollTop() >= 1000) {
-      $(header).addClass("fixed-top");
+      $(header).addClass("fixed-top box-shadow");
     } else {
-      $(header).removeClass("fixed-top");
+      $(header).removeClass("fixed-top box-shadow");
     }
   });
 
+
+  //  comment and reply
+
+  $(document).on('click', ".comment-reply-btn-thread", function (event) {
+    event.preventDefault();
+    $(".comment-reply").fadeToggle();
+    //$(this).parent().next(".comment-reply").fadeToggle();
+  });
+
+  $(document).on('click', ".comment-reply-btn", function (event) {
+    event.preventDefault();
+    $(this).parent().next(".comment-reply").fadeToggle();
+  });
+
+
+  // setTimeout(function () {
+  //   $('.mmm').fadeOut();
+  // }, 15000);
+
+  //  end comment and reply
+
+  //  end block java scripts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   //   start hover submenu
-  $(".dropdown1").hover(
-    function() {
-      $(this)
-        .find(".dropdown-content")
-        .stop(true, true)
-        .delay(200)
-        .fadeIn(200);
-    },
-    function() {
-      $(this)
-        .find(".dropdown-content")
-        .stop(true, true)
-        .delay(300)
-        .fadeOut(500);
-    }
-  );
+  // $(".dropdown1").hover(
+  //   function () {
+  //     $(this)
+  //       .find(".dropdown-content")
+  //       .stop(true, true)
+  //       .delay(200)
+  //       .fadeIn(200);
+  //   },
+  //   function () {
+  //     $(this)
+  //       .find(".dropdown-content")
+  //       .stop(true, true)
+  //       .delay(300)
+  //       .fadeOut(500);
+  //   }
+  // );
   //    sacond sub menu
-  $(".btn-2").hover(
-    function() {
-      $(this)
-        .find(".drop-con")
-        .stop(true, true)
-        .delay(200)
-        .fadeIn(200);
-    },
-    function() {
-      $(this)
-        .find(".drop-con")
-        .stop(true, true)
-        .delay(200)
-        .fadeOut(500);
-    }
-  );
+  // $(".btn-2").hover(
+  //   function () {
+  //     $(this)
+  //       .find(".drop-con")
+  //       .stop(true, true)
+  //       .delay(200)
+  //       .fadeIn(200);
+  //   },
+  //   function () {
+  //     $(this)
+  //       .find(".drop-con")
+  //       .stop(true, true)
+  //       .delay(200)
+  //       .fadeOut(500);
+  //   }
+  // );
 
   //  end hover submenu
 
   //    click menu in medi
-  $(function() {
-    // DOM ready
-    if ($(window).width() < 798) {
-      // If a link has a dropdown, add sub menu toggle.
-      $(".dropdown1:not(:only-child)").click(function(e) {
-        $(this)
-          .siblings(".dropdown-content")
-          .toggle();
-        // Close one dropdown when selecting another
-        $(".dropdown-content")
-          .not($(this).siblings())
-          .hide();
-        e.stopPropagation();
-      });
-    } else {
-      $(".dropdown1").hover(function(e) {
-        $(this)
-          .siblings(".dropdown-content")
-          .toggle();
-        // Close one dropdown when selecting another
-        $(".dropdown-content")
-          .not($(this).siblings())
-          .hide();
-        e.stopPropagation();
-      });
-    }
-    // Clicking away from dropdown will remove the dropdown class
-    $("html").click(function() {
-      $(".dropdown-content").hide();
-    });
-  }); // end DOM ready
-  $(function() {
-    // DOM ready
-    if ($(window).width() < 798) {
-      // If a link has a dropdown, add sub menu toggle.
-      $(".btn-2:not(:only-child)").click(function(e) {
-        $(this)
-          .siblings(".drop-con")
-          .toggle();
-        // Close one dropdown when selecting another
-        $(".drop-con")
-          .not($(this).siblings())
-          .hide();
-        e.stopPropagation();
-      });
-    } else {
-      $(".btn-2").hover(function(e) {
-        $(this)
-          .siblings(".drop-con")
-          .toggle();
-        // Close one dropdown when selecting another
-        $(".drop-con")
-          .not($(this).siblings())
-          .hide();
-        e.stopPropagation();
-      });
-    }
-    // Clicking away from dropdown will remove the dropdown class
-    $("html").click(function() {
-      $(".drop-con").hide();
-    });
-  }); // end DOM ready
+  // $(function () {
+  //   // DOM ready
+  //   if ($(window).width() < 798) {
+  //     // If a link has a dropdown, add sub menu toggle.
+  //     $(".dropdown1:not(:only-child)").click(function (e) {
+  //       $(this)
+  //         .siblings(".dropdown-content")
+  //         .toggle();
+  //       // Close one dropdown when selecting another
+  //       $(".dropdown-content")
+  //         .not($(this).siblings())
+  //         .hide();
+  //       e.stopPropagation();
+  //     });
+  //   } else {
+  //     $(".dropdown1").hover(function (e) {
+  //       $(this)
+  //         .siblings(".dropdown-content")
+  //         .toggle();
+  //       // Close one dropdown when selecting another
+  //       $(".dropdown-content")
+  //         .not($(this).siblings())
+  //         .hide();
+  //       e.stopPropagation();
+  //     });
+  //   }
+  //   // Clicking away from dropdown will remove the dropdown class
+  //   $("html").click(function () {
+  //     $(".dropdown-content").hide();
+  //   });
+  // }); // end DOM ready
+  // $(function () {
+  //   // DOM ready
+  //   if ($(window).width() < 798) {
+  //     // If a link has a dropdown, add sub menu toggle.
+  //     $(".btn-2:not(:only-child)").click(function (e) {
+  //       $(this)
+  //         .siblings(".drop-con")
+  //         .toggle();
+  //       // Close one dropdown when selecting another
+  //       $(".drop-con")
+  //         .not($(this).siblings())
+  //         .hide();
+  //       e.stopPropagation();
+  //     });
+  //   } else {
+  //     $(".btn-2").hover(function (e) {
+  //       $(this)
+  //         .siblings(".drop-con")
+  //         .toggle();
+  //       // Close one dropdown when selecting another
+  //       $(".drop-con")
+  //         .not($(this).siblings())
+  //         .hide();
+  //       e.stopPropagation();
+  //     });
+  //   }
+  //   // Clicking away from dropdown will remove the dropdown class
+  //   $("html").click(function () {
+  //     $(".drop-con").hide();
+  //   });
+  // }); // end DOM ready
 
-  //  end ckick menu inmedia
+  // //  end ckick menu inmedia
 
-  //   style header boxShadow when  the scroll == 1000
-  //  start open and close menu
+  // //   style header boxShadow when  the scroll == 1000
+  // //  start open and close menu
 
-  $(".open").click(function() {
-    var link = document.querySelector(".links");
-    link.classList.toggle("translateY");
-  });
+  // $(".open").click(function () {
+  //   var link = document.querySelector(".links");
+  //   link.classList.toggle("translateY");
+  // });
 
   //  Start Slider-modrenproduct
   // $(".slide-modrenproduct").owlCarousel({
@@ -315,77 +328,78 @@ $(document).ready(function() {
 
   //  start show and hide password
 
-  var showpass1 = $(".showpass1"),
-    pass1 = document.getElementById("pass1"),
-    pass2 = document.getElementById("pass2");
-  $(".showpass1").click(function() {
-    //  if we click button change attrbite input to text
-    if (pass1.getAttribute("type") === "password") {
-      //  then change attribue
-      pass1.setAttribute("type", "text");
+  // var showpass1 = $(".showpass1"),
+  //   pass1 = document.getElementById("pass1"),
+  //   pass2 = document.getElementById("pass2");
+  // $(".showpass1").click(function () {
+  //   //  if we click button change attrbite input to text
+  //   if (pass1.getAttribute("type") === "password") {
+  //     //  then change attribue
+  //     pass1.setAttribute("type", "text");
 
-      //  hide button show and show button hide
-      $(this).hide();
-      $(".not-show1").show();
-      $(".not-show1").click(function() {
-        //  setattrbite password
-        pass1.setAttribute("type", "password");
-        $(this).hide();
-        $(".showpass1").show();
-      });
-    } else {
-      pass1.setAttribute("type", "password");
-    }
-  });
+  //     //  hide button show and show button hide
+  //     $(this).hide();
+  //     $(".not-show1").show();
+  //     $(".not-show1").click(function () {
+  //       //  setattrbite password
+  //       pass1.setAttribute("type", "password");
+  //       $(this).hide();
+  //       $(".showpass1").show();
+  //     });
+  //   } else {
+  //     pass1.setAttribute("type", "password");
+  //   }
+  // });
 
-  $(".showpass2").click(function() {
-    //  if we click button change attrbite input to text
-    if (pass2.getAttribute("type") === "password") {
-      //  then change attribue
-      pass2.setAttribute("type", "text");
+  //   $(".showpass2").click(function () {
+  //     //  if we click button change attrbite input to text
+  //     if (pass2.getAttribute("type") === "password") {
+  //       //  then change attribue
+  //       pass2.setAttribute("type", "text");
 
-      //  hide button show and show button hide
-      $(this).hide();
-      $(".not-show2").show();
-      $(".not-show2").click(function() {
-        //  setattrbite password
-        pass2.setAttribute("type", "password");
-        $(this).hide();
-        $(".showpass2").show();
-      });
-    } else {
-      pass2.setAttribute("type", "password");
-    }
-  });
-  //  end show and hide password
-  //  start sarch form
+  //       //  hide button show and show button hide
+  //       $(this).hide();
+  //       $(".not-show2").show();
+  //       $(".not-show2").click(function () {
+  //         //  setattrbite password
+  //         pass2.setAttribute("type", "password");
+  //         $(this).hide();
+  //         $(".showpass2").show();
+  //       });
+  //     } else {
+  //       pass2.setAttribute("type", "password");
+  //     }
+  //   });
+  //   //  end show and hide password
+  //   //  start sarch form
 
-  //  show password form login
-  $(".showpass1").click(function() {
-    //  if we click if input attrbite = password
-    if ($("#pass1").getAttribute("type") === "password") {
-      // then change attribut to text
-      $("#pass1").setAttribute("type", "text");
+  //   //  show password form login
+  //   $(".showpass1").click(function () {
+  //     //  if we click if input attrbite = password
+  //     if ($("#pass1").getAttribute("type") === "password") {
+  //       // then change attribut to text
+  //       $("#pass1").setAttribute("type", "text");
 
-      // hide icon show password
-      $(this).hide();
-      //  show icon no-show password
-      $(".not-show1").show();
+  //       // hide icon show password
+  //       $(this).hide();
+  //       //  show icon no-show password
+  //       $(".not-show1").show();
 
-      // if we click icon no-show password then input pass to change
-      $(".not-show1").click(function() {
-        // set attribut password
-        $("#pass1").setAttribute("type", "password");
+  //       // if we click icon no-show password then input pass to change
+  //       $(".not-show1").click(function () {
+  //         // set attribut password
+  //         $("#pass1").setAttribute("type", "password");
 
-        // if click then no-show icon to hide
-        $(".not-show1").hide();
-        // and show icon show password
-        $(".showpass1").show();
-      });
-    } else {
-      // else set atrribut password
-      $("#pass1").setAttribute("type", "password");
-    }
-  });
-  // end show password logign
+  //         // if click then no-show icon to hide
+  //         $(".not-show1").hide();
+  //         // and show icon show password
+  //         $(".showpass1").show();
+  //       });
+  //     } else {
+  //       // else set atrribut password
+  //       $("#pass1").setAttribute("type", "password");
+  //     }
+  //   });
+  //   // end show password logign
+  // 
 });

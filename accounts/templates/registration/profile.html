@@ -4,25 +4,29 @@
 
 <div class="container">
     <div class="row">
-        <div class="mt-3 mb-3 col-lg-6 col-md-6 col-sm-12  mt-4 mb-4">
+        <div class="mt-3 mb-3 col-lg-4 col-md-6 col-sm-12  mt-4 mb-4">
             <div class="bg-blog">
                 <div class="summery_header-profile">
                     <div class="user-pro">
-                        {% if user.profile.image %}
-                        <img class="img-fluid rounded-circle mt-auto " src="{{user.profile.image.url}}"
-                            alt="{{user.username}}" title="{{user.username}}">
+                        {% if profile.image %}
+                        <img class="img-fluid rounded-circle mt-auto " src="{{profile.image.url}}"
+                            alt="{{profile.user}}" title="{{profile.user}}">
                         {% endif %}
                     </div>
                 </div>
                 <div class="info-profile blog ">
-                    <ul class="mx-auto">
-                        <li>الاسم: <span>{{profile.user}}</span></li>
-                        <li>نبذة : <span>{{profile.about_us}} </span></li>
-                        <li>الايميل: <span>{{profile.user.email}}</span></li>
-
-                    </ul>
+                    <div class="mx-auto w-50">
+                        <div><p>{{profile.user}}</p></div>
+                        <div>{{profile.about_us}}</div>
+                        {% if profile.user == request.user %}
+                        <div>{{profile.user.email}}</div>
+                        {% endif %}
+                    </div>
+                  
                 </div>
-                <a href="{% url 'accounts:profile_edit'%}" class="reset-pass w-100 mt-2">تعديل البروفايل</a>
+                {% if profile.user == request.user %}
+                <a href="{% url 'accounts:profile_edit' profile.user %}" class="reset-pass w-100 mt-2">تعديل البروفايل</a>
+                {% endif %}
             </div>
 
 

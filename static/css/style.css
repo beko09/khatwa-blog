@@ -148,7 +148,9 @@ h5 {
 small {
   color: #6b6b6b7e;
 }
-
+.box-shadow{
+  box-shadow: 0px 0px 10px #e7e7e7;
+}
 blockquote {
   padding: .75rem 4rem .75rem 1rem;
   font-size: .8rem;
@@ -184,7 +186,9 @@ blockquote::after{
 }
 
 /*  start header */
-
+header{
+      padding: .7rem;
+}
 .header{
   padding: 0;
   padding: 0;
@@ -238,7 +242,10 @@ blockquote::after{
   padding: 4px;
   outline: none;
   color: #6c6c6c;
-  box-shadow: 0;
+  box-shadow: none;
+}
+.form input:focus{
+  background: transparent !important;
 }
 .form input:focus{
   box-shadow: none;
@@ -353,6 +360,8 @@ code{
 }
 .date span{
   margin-left: 10px;
+  color: #6b6b6b7e;
+  font-size: 80%;
 }
 .comment-user{
   margin-bottom: 0;
@@ -480,7 +489,7 @@ code{
 */
 .pagination_wrap {
   text-align: center;
-  margin-top: 20px;
+  margin: 40px 0;
 }
 .pagination_wrap ul {
   margin: 0px;
@@ -514,6 +523,9 @@ code{
   border-color: #1b82c4;
   color: #1b82c4;
 }
+.register-from .form-text{
+  display: none !important;
+}
 
 /*  end pagination */
 
@@ -532,7 +544,6 @@ code{
 .social-form .btn {
   width: 100%;
   padding: 12px;
-  border: none;
   border-radius: 4px;
   margin: 5px 0;
   opacity: 0.85;
@@ -669,3 +680,70 @@ code{
 }
 
 /*  end login with social media */
+
+
+
+/*  start footer */
+footer{
+  margin-top: 60px;
+}
+.about-khatwa-blog .logo-blog {
+  width: 100%;
+  height: 160px;
+  position: relative;
+}
+.about-khatwa-blog .logo-blog h3{
+    position: absolute;
+    left: 20%;
+    top: 40%;
+    content: "";
+}
+.about-khatwa-blog .logo-blog img{
+  width: 200px;
+  height: 100%;
+}
+.about-khatwa-blog .content-about p{
+ font-size: 1rem;
+}
+.helper-link{
+  padding-top: 4rem;
+}
+.helper-link ul{
+  padding: 1rem;
+}
+.helper-link ul li{
+      margin-bottom: 1rem;
+}
+footer hr{
+     border-top: 1px solid #f7f8faf2;
+}
+.icon-fo,.copy{
+  color: #0A8CFF;
+  margin: 1px;
+}
+.copy{
+    font-size: 1.3rem;
+    margin: 4px;
+}
+.copy-right{
+  justify-content: space-between;
+}
+.subscri{
+  margin-top: 4rem;
+}
+.subscri .btn-search,.subscri .btn-search:hover{
+  color: #fff;
+}
+.subscri form{
+      box-shadow: 0px 0px 10px #e7e7e7;
+}
+@media screen and (max-width: 992px) {
+  .copy-right{
+  justify-content: space-between;
+  flex-direction: column;
+}
+}
+/*  end  footer */
+
+
+

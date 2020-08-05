@@ -27,12 +27,13 @@
                {% comment %} <h2> {{comment.user}}</h2> {% endcomment %}
                <small>{{comment.publish_at}}</small>
                <p>{{comment.get_markdown}}</p>
-               <a href="#" class="comment-reply-btn">
+               <a href="#" class="comment-reply-btn-thread">
                   {% if comment.children.count > 0 %}
                   {{comment.children.count}} تعليقا
                   {% elif comment.children.count == 0 %} 0 تعليقا
                   {% endif %}
-                  <span class="slah">|</span> رد
+                  <span class="slah">|</span>
+                 رد
 
                   {% if request.user == comment.user %}
                   <span class="slah">|</span><a href="{{comment.get_delete_url}}">مسح</a>
@@ -41,41 +42,9 @@
                </a>
             </div>
 
-            <div class="comment-reply ">
-               {% for child_comment in comment.children  %}
-               <div class="ml-3 mt-3 reply-content">
-                  <div class="author-image reply-user d-flex flex-row">
-                     <div class="profile ">
-                        {% if child_comment.user.profile.image %}
-                        <img class="profile-image" src="{{child_comment.user.profile.image.url}}"
-                           alt="{{child_comment.user}}" title="{{child_comment.user}}">
-                        {% endif %}
-                     </div>
-                     <div class="author-name">
-                        <h6>{{ child_comment.user }}</h6>
-                     </div>
-                  </div>
-                  <small>{{child_comment.publish_at}}</small>
-                  <p>{{child_comment.get_markdown}}</p>
-                  {% if request.user == child_comment.user %}
-                  <a href="{{child_comment.get_delete_yrl}}">مسح</a>
-                  {% endif %}
-               </div>
-
-               {% endfor %}
-               {% if request.user.is_authenticated %}
-               <form method="POST" enctype="multipart/form-data" class="form-reply">
-                  {% csrf_token %}
-                  {{ form|crispy  }}
-                  <input type="hidden" name="parent_id" value="{{comment.id}}" />
-                  {% buttons %}
-                  <div class="submit_btn">
-                     <button class="btn btn-primary w-100" type="submit">رد</button>
-                  </div>
-                  {% endbuttons %}
-               </form>
-               {% endif %}
-            </div>
+           <div id="y">
+            {% include "comments/replay-comment.html" %}
+           </div>
 
          </div>
 
@@ -84,3 +53,82 @@
    </div>
 </div>
 {% endblock content %}
+
+
+
+{% block javascripts %}
+<script>
+   $(document).ready(function () {
+
+
+
+
+
+      // using jQuery
+      function getCookie(name) {
+         var cookieValue = null;
+         if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+               var cookie = jQuery.trim(cookies[i]);
+               // Does this cookie string begin with the name we want?
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+               }
+            }
+         }
+         return cookieValue;
+      }
+
+      var csrftoken = getCookie('csrftoken');
+
+      function csrfSafeMethod(method) {
+         // these HTTP methods do not require CSRF protection
+         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+      }
+      $.ajaxSetup({
+         beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+               xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+         }
+      });
+
+
+
+
+
+
+
+
+ $(document).on('submit', "#reply-form", function (event) {
+         event.preventDefault();
+         var form = $("#reply-form");
+         var formData = form.serialize();
+         var thisURL = form.attr('data-url') || window.location.href // or set your own url
+         $.ajax({
+            type: "POST",
+            url: thisURL,
+            data: formData,
+            cache: false,
+            dataType: 'json',
+            success: function (data) {
+               data = data['form']
+               $("#y").html(data);
+               $("textarea").val(' ');
+               
+            },
+            error: function (e) {
+               console.log(e);
+            },
+
+         });
+         //return false;
+      });
+
+
+   });
+</script>
+
+{% endblock javascripts %}

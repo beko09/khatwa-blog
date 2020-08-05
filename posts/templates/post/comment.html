@@ -13,8 +13,8 @@
        {% endbuttons %}
     </form>
     {% else %}
-    <p> لابد من تسجيل الدخول للتعليق
-       {% comment %} <a href="{% url 'login' %}">login</a> {% endcomment %}
+    <p> لابد من <a href="{% url 'login'%}?next={{instance.get_absolute_url}}">تسجيل الدخول</a> للتعليق
+
        {% endif %}
  </div>
  <div class="dd">
@@ -29,7 +29,7 @@
                 {% endif %}
              </div>
              <div class="author-name">
-                <a href="{% url 'accounts:profile' %}">
+                <a href="{% url 'accounts:profile' comment.user %}">
                    <h6>{{ comment.user }}</h6>
                 </a>
              </div>
@@ -42,7 +42,8 @@
              {{comment.children.count}} تعليقا
              {% elif comment.children.count == 0 %} 0 تعليقا
              {% endif %}
-             <span class="slah">|</span> رد
+             <span class="slah">|</span> 
+             رد
              <span class="slah">|</span>
              <a href="{{comment.get_absolute_url}}">
                 عرض
@@ -66,7 +67,7 @@
                    {% endif %}
                 </div>
                 <div class="author-name">
-                   <a href="{% url 'accounts:profile' %}">
+                   <a href="{% url 'accounts:profile' child_comment.user %}">
                       <h6>{{ child_comment.user }}</h6>
                    </a>
                 </div>

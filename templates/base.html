@@ -13,14 +13,15 @@
   <meta name="apple-mobile-web-app-capable" content="#fff" />
 
   <!-- iOS Safari -->
-  <meta name="description" content="FFA" />
-  <meta name="keywords" content="FFA" />
-  <meta name="author" content="FFA" />
+  <meta name="description" content="{% block descri %} مدونة خطوة للشروحات البرمجية ,تتناول المدونة 
+  كافة مجالات الحاسوب بمواضيع عدة شرح سهل بين يديك{% endblock descri %}" />
+  <meta name="keywords" content="khatwa" />
+  <meta name="author" content="khatwa" />
   <meta name="apple-mobile-web-app-status-bar-style" content="blueviolet" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="robots" content="noindex, nofollow" />
-  {% comment %}
-  <link rel="icon" sizes="100x100" type="image/ico" href="image/FFA-FAVICON.ico" /> {% endcomment %}
+  
+  <link rel="icon" sizes="100x100" type="image/ico" href="{% static 'img/khatwa.ico' %}" /> 
 
   <title>{% block head_title %} blog{% endblock head_title %}</title>
   <!--  lib bootstrao -->
@@ -43,9 +44,8 @@
       <div class="header">
         <nav class="navbar">
           <a class="nav-link" href="{% url 'posts:post_list'  %}">المقالات</a>
-          {% if user.is_staff %}
+          {% if perms.posts.add_post %}
           <a class="nav-link" href="{% url 'posts:create'  %}">انشاء</a>
-          <a class="nav-link" href="/admin/">الادمن</a>
           {% endif %}
         </nav>
         <div class=" dropdown">
@@ -62,7 +62,7 @@
           </a>
           <div class="dropdown-menu bg-blog dropdown-menu-right" aria-labelledby="dropdownMenuLink">
             <div class="d-xl-block ">
-              <a href="{% url 'accounts:profile' %}" class="dropdown-item">بروفايلي</a>
+              <a href="{% url 'accounts:profile' request.user %}" class="dropdown-item">بروفايلي</a>
             </div>
             {% if user.is_staff %}
             <div class=" d-xl-block ">
@@ -89,6 +89,71 @@
   {% block content %}
 
   {% endblock content %}
+
+
+
+  <!-- start footer -->
+  <footer>
+    <div class="bg-blog">
+      <div class="container">
+          <div class="row">
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="about-khatwa-blog">
+                  <div class="logo-blog d-flex align-items-center">
+                    <div><img src="{% static 'img/khatwa.svg' %}" alt="khatwa-blog" ></div>
+                    <div><h3>مدونة خطوة</h3></div>
+                  </div>
+                  <div class="content-about">
+                   <p>
+                   مبادرة خطوة مبادرة تقنية تهتم بمجال البرمجة تقيم المبادرة مسابقات في التخصصات البرمجية 
+                   </p>
+                  </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="helper-link">
+                  <h2>روابط مهمة</h2>
+                <ul>
+                  <li>
+                    <a href="{% url 'posts:post_list' %}">لينك مساعد بس</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'posts:post_list' %}">لينك مساعد بس</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'posts:post_list' %}">لينك مساعد بس</a>
+                  </li>
+                  <li>
+                    <a href="{% url 'posts:post_list' %}">لينك مساعد بس</a>
+                  </li>
+                </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="subscri">
+                    <h4>اشترك في القائمة البريدية</h4>
+                    <p>لتحصل علي اخر المقالات والاخبار</p>
+                    {% include 'subscrip.html' %}
+                </div>
+            </div>
+          </div>
+      </div>
+      <hr class="mb-0">
+      <div class=" bg-blog p-4">
+        <div class="container">
+          <div class="copy-right d-flex ">
+            <div>
+            جميع الحقوق<span class="copy">&copy;</span> 2020-<script>document.write(new Date().getFullYear());</script> محفوظة <i class="fa icon-fo fa-hand-point-left"></i> لمدونة خطوة
+            </div>
+            <div>
+           برمجة وصَمَّم بِحُبّ<i class="fa icon-fo fa-heart"></i> مِنْ قِبَلِ <a href="http:beko4learn.com">أَبُوبَكْر هِلَال</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- end footer-->
 
   <!-- lib jquery -->
   <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>

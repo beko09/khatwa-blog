@@ -4,10 +4,9 @@
 all posts | {{block.super}}
 {% endblock head_title %}
 {% block content %}
-
 <div class="container">
     <div class="row">
-        <div class="mt-3 mb-3 col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
+        <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
             <div class="form-search">
                 <form action="" method="get" class="w-100 form bg-blog">
                     <input class="form-control" type="text" name="q" value="{{ request.GET.q }}"
@@ -17,9 +16,11 @@ all posts | {{block.super}}
             </div>
         </div>
     </div>
-    <div class="row">
+
+
         {% if posts %}
         {% for post in posts %}
+        <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
             <div class="bg-blog p-3 mt-2 article">
                 {% if post.image %}
@@ -29,7 +30,7 @@ all posts | {{block.super}}
                     <h1> {{post.title}}</h1>
                 </a>
                 <div class="user-post">
-                    <a href="{% url 'accounts:profile' %}">
+                    <a href="{% url 'accounts:profile' post.user %}">
                         <h6> {{post.user}}</h6>
                     </a>
                 </div>
@@ -61,47 +62,46 @@ all posts | {{block.super}}
                 </div>
             </div>
         </div>
-    </div>
-
+        </div>
+    {% comment %} </div>
+</div> {% endcomment %}
     {% endfor %}
     {% if posts.has_other_pages %}
-    <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="pagination_wrap">
                     <ul>
                         {% if posts.has_previous %}
-                        <li><a href="?{{page_request_var}}={{posts.previous_page_number}}"> <i
+                        <li><a href="?{{page_request_var}}={{posts.previous_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"> <i
                                     class="fa fa-angle-right"></i> </a></li>
                         {% endif %}
 
-                        {% for i in posts.paginator.page_range %}
+                        {% for i in posts.paginator.page_range|slice:5 %}
                         <li><a href="?{{page_request_var}}={{i}}"><span>{{i}}</span></a></li>
                         {% endfor %}
 
                         {% if posts.has_next %}
-                        <li><a href="?{{page_request_var}}={{posts.next_page_number}}"> <i class="fa fa-angle-left"></i>
+                        <li><a href="?{{page_request_var}}={{posts.next_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"> <i class="fa fa-angle-left"></i>
                             </a></li>
                         {% endif %}
                     </ul>
                 </div>
             </div>
         </div>
-    </div>
+
 
 
 
     {% endif %}
 
     {% else %}
-    <div class="container">
         <div class="row">
             <div class="mb-3 col-lg-6 col-md-6 col-sm-12 mx-auto">
                 <div class=" bg-blog p-3">
-                    <p class="text-center w-100">لا توجد منشورات</p>
+                    <p class="text-center w-100">لا توجد مقالات</p>
                 </div>
             </div>
         </div>
-    </div>
     {% endif %}
+    </div>
     {% endblock content %}

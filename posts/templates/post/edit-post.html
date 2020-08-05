@@ -9,7 +9,6 @@ all posts | {{block.super}}
 {% endblock head_extra %}
 {% block content %}
 <div class="container">
-
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
             <form method="POST" enctype="multipart/form-data">
@@ -18,21 +17,20 @@ all posts | {{block.super}}
                 {{ form|crispy  }}
                 {% buttons %}
                 <div class="submit_btn">
-                    <button class="btn btn-primary w-100" type="submit">{{title}}</button>
-                    {% endbuttons %}
+                    <button class="btn btn-primary w-100" type="submit">حفظ التعديلات</button>
+                </div>
+                {% endbuttons %}
             </form>
         </div>
-    </div>
-    <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
-        <h4 class="preview"> معاينة المنشور قبل النشر</h4>
-
-        <div class="content-preview">
-            <h1 id="preview-title"> </h1>
-            <p id="preview-content"> </p>
+    
+        <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
+            <h4 class="preview"> معاينة المنشور قبل النشر</h4>
+            <div class="content-preview">
+                <h3 id="preview-title"> </h3>
+                <p id="preview-content"> </p>
+            </div>
         </div>
     </div>
-
 </div>
 
-</div>
 {% endblock content %}
