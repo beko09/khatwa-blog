@@ -25,6 +25,7 @@
                   
                 </div>
                 {% if profile.user == request.user %}
+                <a href="{% url 'password_change' %}" class="m-auto w-50 mt-2"> تغير كلمة السر</a>
                 <a href="{% url 'accounts:profile_edit' profile.user %}" class="reset-pass w-100 mt-2">تعديل البروفايل</a>
                 {% endif %}
             </div>

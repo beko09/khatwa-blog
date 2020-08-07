@@ -16,6 +16,12 @@
                         <h6 class="mb-0 user-post"> {{post.user}} </h6>
                         </a>
                        </p>
+                <p class="mb-0 mr-2">في قسم : </p>
+                       <p>
+                        <a href="{% url 'posts:category' post.category %}">
+                        <h6 class="mb-0 user-post"> {{post.category}} </h6>
+                        </a>
+                       </p>
                     
                 </div>
                 {% comment %}
@@ -38,7 +44,7 @@
                 <span style="color:red">مسودة</span> 
                 {% endif %}
                 <small>{{post.publish}}</small>
-                 <small>, {{post.comments|length}} تعليقاّ</small>
+                 <small>, {{post.comments.count}} تعليقاّ</small>
                 <small>
                 ,
                      {% if post.read_time|time:"i" <= "01" %}

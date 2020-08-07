@@ -1,5 +1,5 @@
 from django.shortcuts import render, Http404, HttpResponse,get_object_or_404 ,redirect,HttpResponseRedirect,redirect,reverse
-from .models import Post
+from .models import Post,Category
 from .forms import PostForm
 from django.contrib import messages
 from django.core.paginator import Paginator
@@ -18,6 +18,7 @@ from django.template.loader import render_to_string
 def post_create(request):
     # if not request.user.is_staff or not request.user.is_superuser:
     #     raise Http404
+    
     if not request.user.is_authenticated:
         raise Http404
     if request.method == "POST":
@@ -33,7 +34,7 @@ def post_create(request):
         form = PostForm()
 
     context = {
-        'form': form
+        'form': form,
     }
     return render(request, 'post/create-post.html', context)
 
@@ -168,3 +169,33 @@ def post_delete(request, slug=None):
     instance.delete()
     messages.success(request, 'success delete')
     return redirect('posts:post_list')
+
+
+
+def category_post(request, name):
+    category = get_object_or_404(Category, name=name)
+    
+    try:
+        posts = Post.objects.active().filter(category=category)
+        print("===",posts)
+    except:
+        raise Http404
+    if request.user.is_staff or request.user.is_superuser:
+        posts = Post.objects.all().filter(category=category)
+    
+    query = request.GET.get("q")
+    if query:
+        posts = posts.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query)|
+            Q(user__username__icontains=query)
+            ).distinct()
+    paginator = Paginator(posts, 5)  # Show 25 contacts per page.
+    page_request_var = 'page-of'
+    page_number = request.GET.get(page_request_var)
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'posts': page_obj,
+        'page_request_var': page_request_var
+            }
+    return render(request, 'category/category_list.html', context)

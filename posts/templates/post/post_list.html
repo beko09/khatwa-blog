@@ -8,7 +8,7 @@ all posts | {{block.super}}
     <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
             <div class="form-search">
-                <form action="" method="get" class="w-100 form bg-blog">
+                <form action="" method="get" class="w-100 form bg-blog" id="form-sea">
                     <input id="search" class="form-control" type="text" name="q" value="{{ request.GET.q }}"
                         placeholder="ابحث عن مقال ...">
                     <button class="btn btn-search" type="submit"><i class="fa fa-search"></i></button>
@@ -26,7 +26,8 @@ all posts | {{block.super}}
 {% block javascripts %}
 <script>
    $(document).ready(function () {
-       
+     $(document).on('submit', "#form-sea", function (event) {
+         event.preventDefault();
       $("#search").keyup(function () {
           //event.preventDefault();
         var query = $(this).val();
@@ -49,6 +50,7 @@ all posts | {{block.super}}
             },
 
          });
+      });
       });
 
 

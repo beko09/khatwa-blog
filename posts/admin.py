@@ -1,5 +1,7 @@
 from django.contrib import admin
-from .models import Post
+from .models import Post,Category
+from django.db import models
+from pagedown.widgets import AdminPagedownWidget
 # Register your models here.
 
 class PostAdmin(admin.ModelAdmin):
@@ -12,6 +14,24 @@ class PostAdmin(admin.ModelAdmin):
     class Meta:
         modal = Post
 
+class AlbumAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.TextField:{'widget':AdminPagedownWidget},
+    }
+
 
 admin.site.register(Post, PostAdmin)
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+    list_display_links = ['name']
+    list_filter = ('name',)
+    ordering = ['name']
+    search_fields = ['name']
+    # list_editable = ['title']
+    class Meta:
+        modal = Category
+
+
+admin.site.register(Category,CategoryAdmin)
 

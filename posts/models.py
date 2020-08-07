@@ -27,23 +27,29 @@ def upload_location(instance, filename):
 #     image_name, extension = filename.split(".")
 #     return "job/%s.%s" % (instance.id, extension)
 
+# CATEGORY_TYPE = (
+#     ('ويب','ويب'),
+#     ('باك اند','باك اند'),
+# )
+
 class Post(models.Model):
     user = models.ForeignKey(
-        User, related_name='Post_user', on_delete=models.CASCADE)
-    title = models.CharField(max_length=120)
-    description = models.CharField(max_length=100)
-    slug = models.SlugField(null=True, blank=True ,allow_unicode=True)  # unique=True
+        User, related_name='Post_user', on_delete=models.CASCADE,verbose_name='اسم المستخدم')
+    title = models.CharField(max_length=120,verbose_name='العنوان')
+    description = models.CharField(max_length=100, verbose_name='الوصف')
+    slug = models.SlugField(null=True, blank=True ,allow_unicode=True, verbose_name='الاسلك')  # unique=True
     image = models.ImageField(upload_to=upload_location, null=True, blank=True,
-                              height_field="height_field", width_field="width_field")
-    height_field = models.IntegerField(default=0)
-    width_field = models.IntegerField(default=0)
+                              height_field="height_field", width_field="width_field",verbose_name='الصورة')
+    height_field = models.IntegerField(default=0,verbose_name='الطول')
+    width_field = models.IntegerField(default=0, verbose_name='العرض')
     content = models.TextField()
-    draft = models.BooleanField(default=False)
-    read_time = models.TimeField(blank=True,null=True)
-    publish = models.DateField(auto_now=False, auto_now_add=False)
-    publish_at = models.DateTimeField(auto_now=False, auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True, auto_now_add=False)
-
+    draft = models.BooleanField(default=False, verbose_name='مسودة')
+    read_time = models.TimeField(blank=True,null=True ,verbose_name='زمن القراءة')
+    publish = models.DateField(auto_now=False, auto_now_add=False,verbose_name='زمن الانشاء')
+    publish_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='زمن النشر')
+    updated = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name='التحديث')
+    # category = models.CharField(max_length=100, choices=CATEGORY_TYPE)
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL,null=True)
     objects = PostManager()
 
 
@@ -97,3 +103,11 @@ def pre_save_post_receiver(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(pre_save_post_receiver, sender=Post)
+
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.name

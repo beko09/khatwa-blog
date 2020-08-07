@@ -91,6 +91,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'about.context_processors.newsletter_singup',
+                'about.context_processors.category_list',
             ],
         },
     },

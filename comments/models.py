@@ -24,18 +24,18 @@ class CommentManager(models.Manager):
 
 class Comment(models.Model):
     user = models.ForeignKey(
-        User, related_name='Comment_user', on_delete=models.CASCADE)
+        User, related_name='Comment_user', on_delete=models.CASCADE,verbose_name='اسم المستخدم')
     # post = models.ForeignKey(
     #     Post, related_name='Comment_post', on_delete=models.CASCADE)
     
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
-    object_id = models.PositiveIntegerField(null=True)
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE,verbose_name=' نوع الكائن')
+    object_id = models.PositiveIntegerField(null=True,verbose_name='معرف الكائن')
     content_object = GenericForeignKey('content_type', 'object_id')
 
-    content = models.TextField(blank=True,null=True)
-    publish_at = models.DateTimeField(auto_now=True)
+    content = models.TextField(blank=True,null=True,verbose_name='المحتوي')
+    publish_at = models.DateTimeField(auto_now=True,verbose_name='زمن الانشاء')
     parent = models.ForeignKey(
-        "self", blank=True, null=True, on_delete=models.CASCADE)
+        "self", blank=True, null=True, on_delete=models.CASCADE,verbose_name='الردود')
 
     objects = CommentManager()
 

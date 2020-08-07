@@ -1,4 +1,4 @@
-from django.shortcuts import render, reverse, redirect, get_object_or_404
+from django.shortcuts import render, reverse, redirect, get_object_or_404,HttpResponseRedirect
 from .forms import RegisterForm, UserForm, ProfileForm
 from django.contrib.auth import authenticate, login
 from .models import Profile
@@ -14,7 +14,8 @@ def register(request):
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
             login(request, user)
-            return redirect('/accounts/profile/')
+            # return redirect('/')
+            return HttpResponseRedirect(reverse('accounts:profile', args=(username,)))
     else:
         form = RegisterForm()
 
@@ -52,7 +53,8 @@ def profile_edit(request,username):
             my_profile = profileForm.save(commit=False)
             my_profile.user = request.user
             my_profile.save()
-            return redirect(reverse('accounts:profile'))
+            # return redirect(reverse('accounts:profile'))
+            return HttpResponseRedirect(reverse('accounts:profile', args=(username,)))
 
     else:
         userForm = UserForm(instance=request.user)

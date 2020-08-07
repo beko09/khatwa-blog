@@ -73,6 +73,9 @@ body {
 .btn-blog:hover{
   opacity: .799;
 }
+.helptext{
+  display: none !important;
+}
 /* .header{
   background-color: #fff;
 } */
@@ -294,9 +297,9 @@ code{
   direction: ltr !important;
 }
 
-.wmd-preview {
+/* .wmd-preview {
   display: none;
-}
+} */
 
 .wmd-panel {
   margin-left: 0 !important;
@@ -304,8 +307,6 @@ code{
   width: 100% !important;
   min-width: 500px;
 }
-
-
 
 
 .preview{
@@ -573,7 +574,19 @@ code{
   background-color: #3B5998;
   color: white;
 }
-
+.fab{
+  color: #3B5998;
+}
+.tw{
+  color: #55ACEE;
+}
+.git{
+  color: #000;
+}
+.social-i{
+  font-size: 2rem;
+      margin: 1rem .3rem;
+}
 .twitter {
   background-color: #55ACEE;
   color: white;
@@ -701,10 +714,10 @@ footer{
   position: relative;
 }
 .about-khatwa-blog .logo-blog h3{
-    position: absolute;
+    /* position: absolute;
     left: 20%;
     top: 40%;
-    content: "";
+    content: ""; */
 }
 .about-khatwa-blog .logo-blog img{
   width: 200px;
@@ -752,6 +765,73 @@ footer hr{
 }
 }
 /*  end  footer */
+
+
+
+/*  start loader */
+
+.khatwa {
+  font-size: 2rem;
+  display: -webkit-inline-box;
+  display: inline-flex;
+  -webkit-box-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+          flex-direction: row;
+  justify-items: center;
+  color: #1b82c4;
+}
+#loader {
+  height: 100% ;
+  width: 100%;
+  position: fixed;
+  display: -webkit-box;
+  z-index: 10000;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  background-color: #f5f7fa;
+}
+.load {
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+          align-items: center;
+  color: #1b82c4;
+  font-family: Consolas, Menlo, Monaco, monospace;
+  font-weight: bold;
+  font-size: 30vh;
+  opacity: 0.8;
+}
+.load span {
+  display: inline-block;
+  -webkit-animation: pulse 0.4s alternate infinite ease-in-out;
+          animation: pulse 0.4s alternate infinite ease-in-out;
+}
+.load span:nth-child(odd) {
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s;
+}
+@-webkit-keyframes pulse {
+  to {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+@keyframes pulse {
+  to {
+    -webkit-transform: scale(0.8);
+            transform: scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+/*  end loader */
 
 
 
