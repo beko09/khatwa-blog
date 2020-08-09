@@ -49,7 +49,7 @@ class Post(models.Model):
     publish_at = models.DateTimeField(auto_now=False, auto_now_add=True, verbose_name='زمن النشر')
     updated = models.DateTimeField(auto_now=True, auto_now_add=False, verbose_name='التحديث')
     # category = models.CharField(max_length=100, choices=CATEGORY_TYPE)
-    category = models.ForeignKey('Category', on_delete=models.SET_NULL,null=True)
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL,null=True,blank=True)
     objects = PostManager()
 
 
@@ -72,6 +72,9 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("posts:post_detail", kwargs={"slug": self.slug})
+
+    def get_delete_url(self):
+        return reverse("posts:post_delete", kwargs={"slug": self.slug})
 
     def get_markdown(self):
         content = self.content

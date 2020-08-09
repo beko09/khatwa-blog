@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-# Create your models here.
-# from posts.models import Post
 from django.urls import reverse
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from markdown_deux import markdown
 from django.utils.safestring import mark_safe
+
+
 
 
 class CommentManager(models.Manager):
@@ -25,13 +25,9 @@ class CommentManager(models.Manager):
 class Comment(models.Model):
     user = models.ForeignKey(
         User, related_name='Comment_user', on_delete=models.CASCADE,verbose_name='اسم المستخدم')
-    # post = models.ForeignKey(
-    #     Post, related_name='Comment_post', on_delete=models.CASCADE)
-    
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE,verbose_name=' نوع الكائن')
     object_id = models.PositiveIntegerField(null=True,verbose_name='معرف الكائن')
     content_object = GenericForeignKey('content_type', 'object_id')
-
     content = models.TextField(blank=True,null=True,verbose_name='المحتوي')
     publish_at = models.DateTimeField(auto_now=True,verbose_name='زمن الانشاء')
     parent = models.ForeignKey(
@@ -41,12 +37,15 @@ class Comment(models.Model):
 
     class Meta:
         ordering = ["-publish_at"]
-    
+
+
     def get_absolute_url(self):
         return reverse("comments:thread", kwargs={"id": self.id})
 
+
     def get_delete_url(self):
         return reverse("comments:comment_delete", kwargs={"id": self.id})
+        
     
     def get_markdown(self):
         content = self.content

@@ -1,12 +1,16 @@
 from django import forms
 from pagedown.widgets import PagedownWidget
+from django_summernote.widgets import SummernoteWidget
 from .models import Post
 from django.utils.translation import gettext_lazy as _
 
 
+
+
+
 class PostForm(forms.ModelForm):
-    content = forms.CharField(widget=PagedownWidget)
-    # description = forms.CharField(widget=PagedownWidget)
+    # content = forms.CharField(widget=PagedownWidget)
+    content = forms.CharField(widget=SummernoteWidget(attrs={'summernote': {'width': '100%'}}))
     publish = forms.DateField(widget=forms.SelectDateWidget)
     class Meta:
         model = Post
@@ -20,3 +24,5 @@ class PostForm(forms.ModelForm):
             'category': _('القسم '),
             'publish': _('التاريخ '),
         }
+        
+        

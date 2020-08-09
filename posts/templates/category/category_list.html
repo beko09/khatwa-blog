@@ -1,114 +1,96 @@
 {% extends 'base.html' %}
-{% comment %} {% markdown_allowed %} {% endcomment %}
+
 {% block head_title %}
 all posts | {{block.super}}
 {% endblock head_title %}
+
 {% block content %}
 <div class="container">
 
-        {% if posts %}
-        {% for post in posts %}
-        <div class="row">
+    {% if posts %}
+    {% for post in posts %}
+    <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
             <div class="bg-blog p-3 mt-2 article">
                 {% if post.image %}
-                <img src="{{post.image.url}}" alt=" {{post.title}}" class="embed-responsive" />
+                <img src="{{post.image.url}}" alt=" {{ post.title }}" class="embed-responsive" />
                 {% endif %}
-                <a href="{{post.get_absolute_url}}">
-                    <h1> {{post.title}}</h1>
+                <a href="{{ post.get_absolute_url }}">
+                    <h1> {{ post.title }}</h1>
                 </a>
                 <div class="mb-2 mt-2  d-flex align-items-center flex-row">
-                <p class="mb-0">كتبه : </p>
-                       <p>
+                    <p class="mb-0">كتبه : </p>
+                    <p>
                         <a href="{% url 'accounts:profile' post.user %}">
-                        <h6 class="mb-0 user-post"> {{post.user}} </h6>
+                            <h6 class="mb-0 user-post"> {{ post.user }} </h6>
                         </a>
-                       </p>
-                    
+                    </p>
+
                 </div>
-                {% comment %}
-                other method work url
-                <a href="{% url 'posts:post_detail' post.id %}">
-                    <h1> {{post.title}}</h1>
-                </a>
-                {% endcomment %}
 
-                {% comment %}
-
-                other method work url
-                <a href="/post_detail/{{ post.id }}">
-                    <h1> {{post.title}}</h1>
-                </a>
-                <p> <span>{{post.publish_at|timesince}}</span></p>
-                {% endcomment %}
                 <p>
-                {% if post.draft %}
-                <span style="color:red">مسودة</span> 
-                {% endif %}
-                <small>{{post.publish}}</small>
-                 <small>, {{post.comments.count}} تعليقاّ</small>
-                <small>
-                ,
-                     {% if post.read_time|time:"i" <= "01" %}
-                     1 دقيقة للقراءة
-                     {% else %}
-                     {{post.read_time|time:"i"}} دقائق للقراءة
-                     {% endif %}
+                    {% if post.draft %}
+                    <span style="color:red">مسودة</span>
+                    {% endif %}
+                    <small>{{ post.publish }}</small>
+                    <small>, {{ post.comments.count }} تعليقاّ</small>
+                    <small>
+                        ,
+                        {% if post.read_time|time:"i" <= "01" %}
+                        1 دقيقة للقراءة
+                        {% else %}
+                        {{ post.read_time|time:"i" }} دقائق للقراءة
+                        {% endif %}
 
-                  </small>
+                    </small>
                 </p>
-                {% comment %} <p class="content-markdown"> {{post.content |markdown| truncatechars:130}}</p>
-                {% endcomment %}
                 <div class="content-markdown">
-                    <p> {{post.get_markdown|truncatechars_html:17}}</p>
+                    <p> {{ post.get_markdown|truncatechars_html:17 }}</p>
                 </div>
                 <div>
-                    <a href="{{post.get_absolute_url}}" class="btn-read">
+                    <a href="{{ post.get_absolute_url }}" class="btn-read">
                         قراءة المقال
                     </a>
                 </div>
             </div>
         </div>
-        </div>
-    {% comment %} </div>
-</div> {% endcomment %}
+    </div>
     {% endfor %}
-  
-          {% if posts.has_other_pages %}
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="pagination_wrap">
-                    <ul>
-                        {% if posts.has_previous %}
-                        <li><a href="?{{page_request_var}}={{posts.previous_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"> <i
-                                    class="fa fa-angle-right"></i> </a></li>
-                        {% endif %}
 
-                        {% for i in posts.paginator.page_range|slice:5 %}
-                        <li><a href="?{{page_request_var}}={{i}}"><span>{{i}}</span></a></li>
-                        {% endfor %}
+    {% if posts.has_other_pages %}
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="pagination_wrap">
+                <ul>
+                    {% if posts.has_previous %}
+                    <li><a
+                            href="?{{ page_request_var }}={{ posts.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                            <i class="fa fa-angle-right"></i> </a></li>
+                    {% endif %}
 
-                        {% if posts.has_next %}
-                        <li><a href="?{{page_request_var}}={{posts.next_page_number}}{% if request.GET.q %}&q={{request.GET.q}}{% endif %}"> <i class="fa fa-angle-left"></i>
-                            </a></li>
-                        {% endif %}
-                    </ul>
-                </div>
+                    {% for i in posts.paginator.page_range|slice:5 %}
+                    <li><a href="?{{ page_request_var }}={{ i }}"><span>{{ i }}</span></a></li>
+                    {% endfor %}
+
+                    {% if posts.has_next %}
+                    <li><a
+                            href="?{{ page_request_var }}={{ posts.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">
+                            <i class="fa fa-angle-left"></i>
+                        </a></li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
-
-
-
-
+    </div>
     {% endif %}
     {% else %}
-        <div class="row">
-            <div class="mb-3 col-lg-6 col-md-6 col-sm-12 mx-auto">
-                <div class=" bg-blog p-3">
-                    <p class="text-center w-100">لا توجد مقالات</p>
-                </div>
+    <div class="row">
+        <div class="mb-3 col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
+            <div class=" bg-blog p-3">
+                <p class="text-center w-100">لا توجد مقالات</p>
             </div>
         </div>
-    {% endif %}
     </div>
-    {% endblock content %}
+    {% endif %}
+</div>
+{% endblock content %}

@@ -29,6 +29,7 @@ urlpatterns = [
     path('', include('about.urls', namespace = 'about')),
     path('oauth/', include('social_django.urls', namespace='social')),
     path('', include('pagedown.urls')),
+    path('summernote/', include('django_summernote.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

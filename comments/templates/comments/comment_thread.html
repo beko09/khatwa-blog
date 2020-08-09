@@ -2,49 +2,56 @@
 {% load bootstrap4 %}
 {% load crispy_forms_tags %}
 {% load urlify  %}
+
 {% block head_title %}
 {{block.super}} | {{instance.title}}
 {% endblock head_title %}
+
+
 {% block content %}
+
 <div class="container">
    <div class="row">
-
       <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
-
          <div class="bg-blog p-3 mt-3 mb-3">
             <div>
                <div class="author-image comment-user d-flex flex-row">
                   <div class="profile">
                      {% if comment.user.profile.image %}
-                     <img class="profile-image" src="{{comment.user.profile.image.url}}" alt="{{comment.user}}"
-                        title="{{comment.user}}">
+                     <a href="{% url 'accounts:profile' comment.user %}">
+                        <img class="profile-image" src="{{ comment.user.profile.image.url }}" alt="{{ comment.user }}"
+                           title="{{ comment.user }}">
+                     </a>
                      {% endif %}
                   </div>
                   <div class="author-name">
-                     <h6>{{ comment.user }}</h6>
+                     <a href="{% url 'accounts:profile' comment.user %}">
+                        <h6>{{ comment.user }}</h6>
+                     </a>
                   </div>
                </div>
-               {% comment %} <h2> {{comment.user}}</h2> {% endcomment %}
-               <small>{{comment.publish_at}}</small>
-               <p>{{comment.get_markdown}}</p>
+               <small>{{ comment.publish_at }}</small>
+               <p>{{ comment.get_markdown }}</p>
                <a href="#" class="comment-reply-btn-thread">
                   {% if comment.children.count > 0 %}
-                  {{comment.children.count}} تعليقا
+                  {{ comment.children.count }} تعليقا
                   {% elif comment.children.count == 0 %} 0 تعليقا
                   {% endif %}
                   <span class="slah">|</span>
-                 رد
+                  رد
 
                   {% if request.user == comment.user %}
-                  <span class="slah">|</span><a href="{{comment.get_delete_url}}">مسح</a>
+                  <span class="slah">|</span><a href="{{ comment.get_delete_url }}">
+                     مسح
+                  </a>
                   {% endif %}
 
                </a>
             </div>
 
-           <div id="y">
-            {% include "comments/replay-comment.html" %}
-           </div>
+            <div id="y">
+               {% include "comments/replay-comment.html" %}
+            </div>
 
          </div>
 
@@ -102,7 +109,7 @@
 
 
 
- $(document).on('submit', "#reply-form", function (event) {
+      $(document).on('submit', "#reply-form", function (event) {
          event.preventDefault();
          var form = $("#reply-form");
          var formData = form.serialize();
@@ -117,7 +124,7 @@
                data = data['form']
                $("#y").html(data);
                $("textarea").val(' ');
-               
+
             },
             error: function (e) {
                console.log(e);

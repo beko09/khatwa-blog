@@ -2,59 +2,49 @@
 {% load bootstrap4 %}
 {% load crispy_forms_tags %}
 {% load urlify  %}
+
 {% block descri %}
 {{instance.description}}
 {% endblock descri %}
+
 {% block head_title %}
 {{block.super}} | {{instance.title}}
 {% endblock head_title %}
 
+
+
 {% block content %}
+
 <div class="container">
    <div class="row">
-
       <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
          <article class="bg-blog p-2 mb-2">
             {% if instance.image %}
-            <img src="{{instance.image.url}}" alt=" {{instance.title}}" class="embed-responsive" />
+            <img src="{{ instance.image.url }}" alt=" {{ instance.title }}" class="embed-responsive" />
             {% endif %}
-            <h1> {{instance.title}}</h1>
-
-
-
-
-
-
-
+            <h1 class="mt-3"> {{ instance.title }}</h1>
             <div class="d-flex  flex-row  share">
                <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
                   <i class="fab fa-facebook"></i>
                </a>
                <a
-                  href="https://twitter.com/home?status={{instance.content |urlify}}%20%{{ request.build_absolute_uri }}">
+                  href="https://twitter.com/home?status={{ instance.content |urlify }}%20%{{ request.build_absolute_uri }}">
                   <i class="fab fa-twitter"></i>
                </a>
                <a
-                  href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{instance.title}}&summary={{instance.content |urlify}}&source={{ request.build_absolute_uri }}">
+                  href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ instance.title }}&summary={{ instance.content |urlify }}&source={{ request.build_absolute_uri }}">
                   <i class="fab fa-linkedin"></i>
                </a>
-               <a href="https://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{instance.title}}">
+               <a href="https://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title }}">
                   <i class="fab fa-reddit"></i>
                </a>
             </div>
-
-
-
-
-
-
-
             <div class="author d-flex flex-column">
                <div class="author-image d-flex flex-row">
                   <div class="profile">
                      {% if instance.user.profile.image %}
-                     <img class="profile-image" src="{{instance.user.profile.image.url}}" alt="{{instance.user}}"
-                        title="{{instance.user}}">
+                     <img class="profile-image" src="{{ instance.user.profile.image.url }}" alt="{{ instance.user }}"
+                        title="{{ instance.user }}">
                      {% endif %}
                   </div>
                   <div class="author-name">
@@ -72,32 +62,35 @@
                   {% endif %}
 
                   <span>
-                     {{instance.publish}} ,
+                     {{ instance.publish }} ,
                   </span>
                   <small>
                      {% if instance.read_time|time:"i" <= "01" %}
                      1 دقيقة للقراءة
                      {% else %}
-                     {{instance.read_time|time:"i"}} دقائق للقراءة
+                     {{ instance.read_time|time:"i" }} دقائق للقراءة
                      {% endif %}
 
                   </small>
+                  
                </div>
+               {% if instance.publish_at != instance.updated  %}
+                  <small class="mt-2">
+                  تم تعديله في 
+                  {{ instance.updated }}
+                  </small>
+                  {% endif %}
             </div>
 
-
-
-
             <div class="content-markdown">
-               <p class="content-post"> {{instance.get_markdown}}</p>
+               <p class="content-post"> {{ instance.content|safe }}</p>
             </div>
 
          </article>
-         {% if instance.user == request.user %}
+         {% if request.user == instance.user %}
          <div class="bg-blog p-3 mt-3 ">
-            {% comment %} | linebreaks |safe{% endcomment %}
             <a class="pt-2 pb-2 btn btn-info" href="{% url 'posts:post_update' instance.slug  %}">تعديل</a>
-            <a class="pt-2 pb-2 btn btn-danger" href="{% url 'posts:post_delete' instance.slug  %}">مسح</a>
+            <a class="pt-2 pb-2 btn btn-danger" href="{{ instance.get_delete_url }}">مسح</a>
          </div>
          {% endif %}
 
@@ -118,9 +111,6 @@
 {% block javascripts %}
 <script>
    $(document).ready(function () {
-
-
-
 
 
       // using jQuery
@@ -187,7 +177,7 @@
 
 
 
- $(document).on('submit', "#reply-form", function (event) {
+      $(document).on('submit', "#reply-form", function (event) {
          event.preventDefault();
          var form2 = $("#reply-form");
          var formData = form2.serialize();
@@ -203,10 +193,10 @@
                $("#x").html(data);
                //$("textarea").val(' ');
                $(".comment-reply-btn").click(function (event) {
-               event.preventDefault();
+                  event.preventDefault();
                   $(this).parent().parent().next(".comment-reply").fadeToggle();
-              //$(".comment-reply").fadeToggle();
-              });
+                  //$(".comment-reply").fadeToggle();
+               });
                $("textarea").val(' ');
             },
             error: function (e) {

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'markdown_deux',
     'social_django',
     'crispy_forms',
+    'django_summernote',
     # my apps
     'accounts',
     'posts',
@@ -197,6 +198,9 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 ALLOW_UNICODE_SLUGS = True
+
+AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
+
 # PARLER_LANGUAGES = {
 #         None: (
 #             {'code': 'ar'},
@@ -277,3 +281,47 @@ JET_THEMES = [
 ]
 
 JET_SIDE_MENU_COMPACT = True
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SUMMERNOTE_THEME = 'bs4'  # Show summernote with Bootstrap4
+
+SUMMERNOTE_CONFIG = {
+      'styleWithSpan': False,
+      'styleWithTags': True,
+      'direction': 'ltr',
+# 'toolbar': [
+#         ['style', ['style','code']],
+#         ['para', ['ul', 'ol','paragraph']],
+#         ['insert', ['link','picture','hr']],
+#         ['view', ['fullscreen', 'codeview']],
+#     ],
+      'summernote': {
+      'styleWithSpan': False,
+      'styleWithTags': True,
+      'direction': 'ltr',
+      'toolbar': [
+                ['style',['style','code']],
+                ['font', ['bold', 'underline', 'clear','superscript','subscript']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen','undo','redo', 'codeview', 'help']],
+        ],
+        # 'lang': 'En-En',
+    'codemirror': {
+                'mode': 'htmlmixed',
+                'lineNumbers': 'true',
+                # You have to include theme file in 'css' or 'css_for_inplace' before using it.
+                'theme': 'flatly',
+            },
+    # 'airMode': True,
+    'css': (
+    ),
+    'js': (
+        '/static/js/main.js'
+    ),
+   
+}
+}

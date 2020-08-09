@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from .models import Profile
 from django.utils.translation import gettext_lazy as _
 
+
+
+
 class RegisterForm(UserCreationForm):
     class Meta:
         model = User
@@ -22,6 +25,7 @@ class RegisterForm(UserCreationForm):
         }
 
 
+
 class UserForm(forms.ModelForm):
     class Meta:
         model = User
@@ -30,9 +34,11 @@ class UserForm(forms.ModelForm):
             'first_name': None,
             'last_name':None,
             'email': None,
-             'password1':None,
+            'password1':None,
             'password2':None,
         }
+
+
 
 
 class ProfileForm(forms.ModelForm):

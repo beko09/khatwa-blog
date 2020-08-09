@@ -13,28 +13,36 @@ from posts.models import Category
 
 
 
-
-
-
-
-
 def newsletter_singup(request):
+    """
+    1- In this function the user will log in and send him 
+    a thank you messageing this function user register 
+    and send email
+    
+    2- check that the email is registered or not
+
+    3- if email register show  messages warning
+
+    4- if email not register save this email and
+     show messages success
+
+    5- and use function send() to send email
+
+    6- last  you can use an external text 
+    file so that you type what you want
+    
+    """
     form = NewsletterForm(request.POST or None)
     if form.is_valid():
         instance = form.save(commit=False)
-        #Here I am sure that the email is registered or not
         if NewsLetterUser.objects.filter(email=instance.email).exists():
-            #if email register show  messages warning
             messages.warning(request,f'هذا الايميل مشترك مسبقا')
         else:
-            # if email not register save this email and show messages success
             instance.save()
             messages.success(request,f'تم الاشتراك بنجاح ')
-            #l am use function send() to send email
             subject = " الاشتراك البريدي"
             from_email = settings.EMAIL_HOST_USER
             to_email = [instance.email]
-            #Here you can use an external text file so that you type what you want
             # with open(settings.BASE_DIR + "/templates/sign_up_email.txt") as f:
             #     signup_message = f.read()
             # lam use simle text
@@ -46,10 +54,7 @@ def newsletter_singup(request):
     return {
         'form_subscrip': form
     }   
-    # context ={
-    #     'form': form
-    # }   
-    # return render(request,'base.html', context)
+
 
 
 def category_list(request):

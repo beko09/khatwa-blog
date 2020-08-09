@@ -21,7 +21,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="robots" content="noindex, nofollow" />
   
-  <link rel="icon" sizes="100x100" type="image/ico" href="{% static 'img/khatwa.ico' %}" /> 
+  <link rel="icon" sizes="100x100" type="image/png" href="{% static 'img/khatwa-7-100.png' %}" /> 
 
   <title>{% block head_title %} blog{% endblock head_title %}</title>
   <!--  lib bootstrao -->
@@ -34,9 +34,9 @@
 
   <!--  main style -->
   {% block head_extra %}
+
   {% endblock head_extra %}
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  <link rel="stylesheet" href="{% static 'css/rtl-admin.css' %}" />
 </head>
 
 <body>
@@ -44,9 +44,16 @@
   <header class="bg-blog">
     <div class="container">
       <div class="header">
+      <div class="logo">
+        <a class="nav-link" href="{% url 'posts:post_list'  %}">
+        <img src="{% static 'img/khatwa-3.png' %}" alt="khatwa-blog" >
+        مدونة مبادرة خطوة | khatwa
+        </a>
+      </div>
         <nav class="navbar">
+          
           <a class="nav-link" href="{% url 'posts:post_list'  %}">المقالات</a>
-          <a class="nav-link" href="{% url 'about:about'  %}">عن خطوة</a>
+          <a class="nav-link" href="{% url 'about:about' %}">عن خطوة</a>
           {% if perms.posts.add_post %}
           <a class="nav-link" href="{% url 'posts:create'  %}">انشاء</a>
           {% endif %}
@@ -64,7 +71,7 @@
             {% endfor %}
           </div>
         </div>
-        </nav>
+
         <div class=" dropdown">
           {% if user.is_authenticated %}
           <a href="#" role="button" id="dropdownMenuLink" aria-haspopup="true" aria-expanded="false"
@@ -99,6 +106,8 @@
             {% endif %}
           </div>
         </div>
+        </nav>
+        
       </div>
     </div>
   </header>
@@ -117,15 +126,15 @@
             <div class="col-lg-4 col-md-12 col-sm-12">
                 <div class="about-khatwa-blog">
                   <div class="logo-blog d-flex align-items-center">
-                    {% comment %} <div><img src="{% static 'img/khatwa.svg' %}" alt="khatwa-blog" ></div> {% endcomment %}
-                    <div><h3>مدونة خطوة</h3></div>
+                    <div><img src="{% static 'img/khatwa-7-100.png' %}" alt="khatwa-blog" ></div>
+                    <div><h3 class="mb-4">مدونة مبادرة خطوة</h3></div>
                   </div>
                   <div class="content-about">
                    <p>
                    مبادرة خطوة مبادرة تقنية تهتم بمجال البرمجة تقيم المبادرة مسابقات في التخصصات البرمجية 
                    </p>
                    <p>
-                   <a href="#"><i class="fab fa-facebook fab social-i"></i></a>
+                   <a href="#"><i class="fab fa-facebook fcb social-i"></i></a>
                    <a href="#"><i class="fab fa-twitter tw social-i"></i></a>
                    <a href="#"><i class="fab fa-github git social-i"></i></a>
                    </p>
@@ -187,5 +196,4 @@
   {% block javascripts %}
   {% endblock javascripts %}
 </body>
-
 </html>

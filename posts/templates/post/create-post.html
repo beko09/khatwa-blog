@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 {% load bootstrap4 %}
-{% block head_extra %}
-{{form.media}}
-{% endblock head_extra %}
-
-{% load crispy_forms_tags %}
-{% comment %} {% load markdown_deux_tags %} {% endcomment %}
 {% block head_title %}
-all posts | {{block.super}}
+انشاء مقال
 {% endblock head_title %}
+{% block head_extra %}
+    {{ form.media }}
+{% endblock head_extra %}
+{% load crispy_forms_tags %}
 
 
 {% block content %}
@@ -19,19 +17,20 @@ all posts | {{block.super}}
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% bootstrap_form form  %}
-                {% comment %} {{ form|crispy  }} {% endcomment %}
                 {% buttons %}
                 <div class="submit_btn">
-                    <button class="btn btn-primary w-100" type="submit">أنشاء المقال</button>
+                    <button class="btn btn-primary w-100" type="submit">
+                        أنشاء المقال
+                    </button>
                 </div>
                 {% endbuttons %}
             </form>
         </div>
-    
+
         <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
             <h4 class="preview"> معاينة المنشور قبل النشر</h4>
             <div class="content-preview mt-3">
-                    <img src="" alt="" id="img" class="embed-responsive" />
+                <img src="" alt="" id="img" class="embed-responsive" />
                 <h3 id="preview-title"> </h3>
                 <p id="preview-content"> </p>
             </div>
