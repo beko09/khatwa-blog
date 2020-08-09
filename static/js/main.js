@@ -22,6 +22,7 @@ $(document).ready(function () {
   //  set preview
   let title = $("#id_title");
   let content = $("#wmd-input-id_content");
+  let contentComment = $("#id_content");
   // let image = $("#id_image");
   // console.log(image.val());
   // $("#preview-title").text(title.val());
@@ -52,6 +53,22 @@ $(document).ready(function () {
     setContent(newContent)
   });
 
+  function setContent(value) {
+    if (value) {
+      var markContent = marked(value)
+      // $("#preview-content").html('عرض');
+      $("#preview-content").html(markContent);
+    }
+    $("#preview-content img").each(function () {
+
+      $(this).addClass("embed-responsive");
+    });
+  };
+  setContent(contentComment.val());
+  contentComment.keyup(function () {
+    var newContent = $(this).val()
+    setContent(newContent)
+  });
 
 
   // document.getElementById("id_image").onChange = function (evt) {
@@ -131,7 +148,22 @@ $(document).ready(function () {
 
 
 
-
+  // var showCode = $("#comments-form textarea").click(function () {
+  //   $(".hide").css("display", "block");
+  //   if ($(this).val() == ' ') {
+  //     $(".hide").css("display", "none");
+  //   }
+  // })
+  var showCode = $(document).on('click', "#comments-form textarea", function (event) {
+    event.preventDefault();
+    $(".hide").css("display", "block");
+  });
+  window.onclick = function (event) {
+    if (event.target == showCode) {
+      // showCod.style.display = "none";
+      $(".hide").css("display", "none");
+    }
+  }
 
 
 });

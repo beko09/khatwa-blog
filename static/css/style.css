@@ -35,7 +35,24 @@ body {
   padding: 20px;
   margin-top: 2rem;
 }
+.hide{
+  display: none;
 
+  margin-bottom: .5rem;
+}
+form textarea{
+  direction: ltr;
+}
+.preview-com #preview-content{
+  direction: ltr;
+  text-align: left;
+}
+.hide .color{
+  text-align: left;
+  color: #a115d1;
+  direction: ltr;
+  display: block;
+}
 .btn-read {
   color: #2836c4b5;
   font-weight: bold;

@@ -20,6 +20,19 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="blueviolet" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
   <meta name="robots" content="noindex, nofollow" />
+
+  <meta property='og:title' content="{% block title_meta %}
+  مدونة خطوة| khatwa
+  {% endblock title_meta %}"/>
+  <meta property='og:image' content="{% block image-meta %}
+  {% static 'img/khatwa-3.png' %}
+  {% endblock image-meta %}"/>
+  <meta property='og:description' content="{% block des_meta %}
+  مدونة مبادرة خطوة
+  {% endblock des_meta %}"/>
+  <meta property='og:url' content="{% block url_meta %}
+  {{ request.build_absolute_uri }}
+  {% endblock url_meta %}"/>
   
   <link rel="icon" sizes="100x100" type="image/png" href="{% static 'img/khatwa-7-100.png' %}" /> 
 

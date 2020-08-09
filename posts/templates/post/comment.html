@@ -4,6 +4,12 @@
  <div class="bg-blog p-3 mt-2 mb-2">
     <h4>التعليقات</h4>
     {% if request.user.is_authenticated %}
+
+    <div class="w-100 preview-com">
+       <div class="content-preview mt-3">
+          <p id="preview-content"> </p>
+       </div>
+    </div>
     <form id="comments-form" method="POST" enctype="multipart/form-data" data-url="{{instance.get_absolute_url|safe }}">
        {% csrf_token %}
        {{ comment_form|crispy  }}
@@ -13,6 +19,14 @@
        </div>
        {% endbuttons %}
     </form>
+    <small class="hide">
+       استخدم
+       <span class="color">
+          **bold** `code` _italics_ ```long code```
+          <span class="color"> [link with 'your title'](https://www.google.com)</span>
+          <span class="color"># h1 ..</span>
+       </span>
+    </small>
     {% else %}
     <p>
        لابد من
@@ -87,6 +101,12 @@
 
           {% endfor %}
           {% if request.user.is_authenticated %}
+
+          <div class="w-100  preview-com">
+             <div class="content-preview mt-3">
+                <p id="preview-content"> </p>
+             </div>
+          </div>
           <form id="reply-form" method="POST" data-url="{{ instance.get_absolute_url|safe }}"
              enctype="multipart/form-data" class="form-reply">
              {% csrf_token %}
@@ -99,6 +119,14 @@
              </div>
              {% endbuttons %}
           </form>
+          <small class="hide">
+             استخدم
+             <span class="color">
+                **bold** `code` _italics_ ```long code```
+                <span class="color"> [link with 'your title'](https://www.google.com)</span>
+                <span class="color"># h1 ..</span>
+             </span>
+          </small>
           {% endif %}
        </div>
 
