@@ -1,30 +1,18 @@
 from django.test import SimpleTestCase
 from django.urls import resolve,reverse
-from posts.views import (
-    post_list,  post_detail,
-    create_post,  post_update,
-    post_delete,  category_post
-     )
+from about.views import about,  newsletter_unsubscribe, control_newsletter
 
 class TestUrls(SimpleTestCase):
     
     
-    def test_create_post_urls_resolves(self):
-        url = reverse('posts:create')
-        self.assertEquals(resolve(url).func, create_post)
+    def test_about_urls_resolves(self):
+        url = reverse('about:about')
+        self.assertEquals(resolve(url).func, about)
 
-    def test_list_post_urls_resolves(self):
-        url = reverse('posts:post_list')
-        self.assertEquals(resolve(url).func, post_list)
+    def test_newsletter_unsubscribe_urls_resolves(self):
+        url = reverse('about:newsletter_unsubscribe')
+        self.assertEquals(resolve(url).func, newsletter_unsubscribe)
 
-    def test_detail_post_urls_resolves(self):
-        url = reverse('posts:post_detail', args=['test'])
-        self.assertEquals(resolve(url).func, post_detail)
-
-    def test_update_post_urls_resolves(self):
-        url = reverse('posts:post_update', args=['test'])
-        self.assertEquals(resolve(url).func, post_update)
-
-    def test_delete_post_urls_resolves(self):
-        url = reverse('posts:post_delete', args=['test'])
-        self.assertEquals(resolve(url).func, post_delete)
+    def test_control_newsletter_urls_resolves(self):
+        url = reverse('about:control_newsletter')
+        self.assertEquals(resolve(url).func, control_newsletter)
