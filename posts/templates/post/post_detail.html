@@ -7,6 +7,7 @@
 {% block title_meta %}
  {{instance.title}}
   {% endblock title_meta %}
+
   {% block image-meta %}
  {% if instance.image %}
  {{ instance.image.url }}
@@ -14,14 +15,15 @@
  {% static 'img/khatwa-3.png' %}
  {% endif %}
   {% endblock image-meta %}
+
  {% block des_meta %}
 {{instance.description}}
   {% endblock des_meta %}
+  
 {% block url_meta %}
   {{ request.build_absolute_uri }}
    {{ request.build_absolute_uri }}
   {% endblock url_meta %}
-
 
 {% block descri %}
 {{instance.description}}
@@ -55,10 +57,10 @@
                   {% comment %} 
                   href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ instance.title }}&summary={{ instance.description |urlify }}&source={{ request.build_absolute_uri }}"> 
                   href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}">{% endcomment %}
-               <a
+               {% comment %} <a
                   href = "https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}">
                   <i class="fab fa-linkedin"></i>
-               </a>
+               </a> {% endcomment %}
                <a href="https://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title }}">
                   <i class="fab fa-reddit"></i>
                </a>
@@ -80,7 +82,7 @@
 
                <div class="d-flex flex-row date">
                   {% if instance.draft %}
-                  <span style="color:red">
+                  <span style="color:#a65c5c;">
                      مسودة
                   </span>
                   {% endif %}
@@ -107,7 +109,7 @@
             </div>
 
             <div class="content-markdown">
-               <p class="content-post"> {{ instance.content|safe }}</p>
+               <p class="content-post"> {{ instance.get_markdown }}</p>
             </div>
 
          </article>

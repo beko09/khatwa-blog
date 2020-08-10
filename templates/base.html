@@ -1,16 +1,16 @@
 {% load static %}
 {% load bootstrap4 %}
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" color-mode="light">
 
 <head>
-  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html"charset=" UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-  <meta name="theme-color" content="#fff" />
-  <meta name="msapplication-navbutton-color" content="#fff" />
+  <meta name="theme-color" content="var(--body)" />
+  <meta name="msapplication-navbutton-color" content="var(--body)" />
   <!-- Windows Phone -->
-  <meta name="apple-mobile-web-app-capable" content="#fff" />
+  <meta name="apple-mobile-web-app-capable" content="var(--body)" />
 
   <!-- iOS Safari -->
   <meta name="description" content="{% block descri %} مدونة خطوة للشروحات البرمجية ,تتناول المدونة 
@@ -23,20 +23,20 @@
 
   <meta property='og:title' content="{% block title_meta %}
   مدونة خطوة| khatwa
-  {% endblock title_meta %}"/>
+  {% endblock title_meta %}" />
   <meta property='og:image' content="{% block image-meta %}
   {% static 'img/khatwa-3.png' %}
-  {% endblock image-meta %}"/>
+  {% endblock image-meta %}" />
   <meta property='og:description' content="{% block des_meta %}
   مدونة مبادرة خطوة
-  {% endblock des_meta %}"/>
+  {% endblock des_meta %}" />
   <meta property='og:url' content="{% block url_meta %}
   {{ request.build_absolute_uri }}
-  {% endblock url_meta %}"/>
-  
-  <link rel="icon" sizes="100x100" type="image/png" href="{% static 'img/khatwa-7-100.png' %}" /> 
+  {% endblock url_meta %}" />
 
-  <title>{% block head_title %} blog{% endblock head_title %}</title>
+  <link rel="icon" sizes="100x100" type="image/png" href="{% static 'img/khatwa-7-100.png' %}" />
+
+  <title>{% block head_title %} مدونة مبادرة خطوة | Khatwa{% endblock head_title %}</title>
   <!--  lib bootstrao -->
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
   <!--  lib fontawesome all -->
@@ -53,74 +53,85 @@
 </head>
 
 <body>
-{% include 'loder.html' %}
+  {% include 'loder.html' %}
   <header class="bg-blog">
     <div class="container">
       <div class="header">
-      <div class="logo">
-        <a class="nav-link" href="{% url 'posts:post_list'  %}">
-        <img src="{% static 'img/khatwa-3.png' %}" alt="khatwa-blog" >
-        مدونة مبادرة خطوة | khatwa
-        </a>
-      </div>
-        <nav class="navbar">
-          
+        <div class="logo">
+          <a class="nav-link" href="{% url 'posts:post_list'  %}">
+            <img src="{% static 'img/khatwa-3.png' %}" alt="khatwa-blog">
+            مدونة مبادرة خطوة | khatwa
+          </a>
+        </div>
+        <div class="menu">
+              <span class="open"><i class="fas fa-bars"></i></span>
+            </div>
+        <nav class="navbar" id="Sidenav">
+          <div class="logo logo-phone d-none">
+          <a class="nav-link" href="{% url 'posts:post_list'  %}">
+            <img src="{% static 'img/khatwa-3.png' %}" alt="khatwa-blog">
+            مدونة مبادرة خطوة | khatwa
+          </a>
+            <a href="javascript:void(0)" class="closebtn mr-auto">&times;</a>
+        </div>
+        <div class="navs d-flex">
           <a class="nav-link" href="{% url 'posts:post_list'  %}">المقالات</a>
           <a class="nav-link" href="{% url 'about:about' %}">عن خطوة</a>
           {% if perms.posts.add_post %}
           <a class="nav-link" href="{% url 'posts:create'  %}">انشاء</a>
           {% endif %}
           <div class=" dropdown">
-          
-          <a href="#" role="button" id="dropdownMenuLink" aria-haspopup="true" aria-expanded="false"
-            class="dropdown-toggle btn user d-xl-block" data-toggle="dropdown">
-            الاقسام
-          </a>
-          <div class="dropdown-menu bg-blog dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-            {% for category in categoryes %}
-            <div class="d-xl-block ">
-              <a href="{% url 'posts:category' category.name %}" class="dropdown-item">{{category.name}}</a>
-            </div>
-            {% endfor %}
-          </div>
-        </div>
 
-        <div class=" dropdown">
-          {% if user.is_authenticated %}
-          <a href="#" role="button" id="dropdownMenuLink" aria-haspopup="true" aria-expanded="false"
-            class="dropdown-toggle btn user d-xl-block" data-toggle="dropdown">
-            <div class="profile">
-              {% if user.profile.image %}
-              <img class="profile-image" src="{{user.profile.image.url}}" alt="{{user.username}}"
-                title="{{user.username}}">
+            <a href="#" role="button" id="dropdownMenuLink" aria-haspopup="true" aria-expanded="false"
+              class="dropdown-toggle btn user d-xl-block" data-toggle="dropdown">
+              الاقسام
+            </a>
+            <div class="dropdown-menu bg-blog dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+              {% for category in categoryes %}
+              <div class="d-xl-block ">
+                <a href="{% url 'posts:category' category.name %}" class="dropdown-item">{{category.name}}</a>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class=" dropdown">
+            {% if user.is_authenticated %}
+            <a href="#" role="button" id="dropdownMenuLink" aria-haspopup="true" aria-expanded="false"
+              class="dropdown-toggle  btn user user-img d-xl-block" data-toggle="dropdown">
+              <div class="profile">
+                {% if user.profile.image %}
+                <img class="profile-image" src="{{user.profile.image.url}}" alt="{{user.username}}"
+                  title="{{user.username}}">
+                {% endif %}
+              </div>
+              {{user.get_username|slice:6}}
+            </a>
+            <div class="dropdown-menu bg-blog dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+              <div class="d-xl-block ">
+                <a href="{% url 'accounts:profile' request.user %}" class="dropdown-item">بروفايلي</a>
+              </div>
+              {% if user.is_staff %}
+              <div class=" d-xl-block ">
+                <a href="{% url 'posts:create' %}" class="dropdown-item"> انشاء مقال</a>
+              </div>
+
+              {% endif %}
+              <div class="d-xl-block ">
+                <a href="{% url 'logout'%}?next=/" class="dropdown-item">خروج</a>
+              </div>
+
+              {% else %}
+              <div class=" d-flex registers">
+                <a class="dropdown-item not-log" href="{% url 'login' %}">دخول</a>
+                <a class="dropdown-item not-log" href="{% url 'accounts:register' %}">تسجيل</a>
+              </div>
               {% endif %}
             </div>
-            {{user.get_username|slice:6}}
-          </a>
-          <div class="dropdown-menu bg-blog dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-            <div class="d-xl-block ">
-              <a href="{% url 'accounts:profile' request.user %}" class="dropdown-item">بروفايلي</a>
-            </div>
-            {% if user.is_staff %}
-            <div class=" d-xl-block ">
-              <a href="{% url 'posts:create' %}" class="dropdown-item"> انشاء مقال</a>
-            </div>
-
-            {% endif %}
-            <div class="d-xl-block ">
-              <a href="{% url 'logout'%}?next=/" class="dropdown-item">خروج</a>
-            </div>
-
-            {% else %}
-            <div class=" d-flex">
-              <a class="dropdown-item not-log" href="{% url 'login' %}">دخول</a>
-              <a class="dropdown-item not-log" href="{% url 'accounts:register' %}">تسجيل</a>
-            </div>
-            {% endif %}
           </div>
-        </div>
+          </div>
         </nav>
-        
+
       </div>
     </div>
   </header>
@@ -135,60 +146,65 @@
   <footer>
     <div class="bg-blog">
       <div class="container">
-          <div class="row">
-            <div class="col-lg-4 col-md-12 col-sm-12">
-                <div class="about-khatwa-blog">
-                  <div class="logo-blog d-flex align-items-center">
-                    <div><img src="{% static 'img/khatwa-7-100.png' %}" alt="khatwa-blog" ></div>
-                    <div><h3 class="mb-4">مدونة مبادرة خطوة</h3></div>
-                  </div>
-                  <div class="content-about">
-                   <p>
-                   مبادرة خطوة مبادرة تقنية تهتم بمجال البرمجة تقيم المبادرة مسابقات في التخصصات البرمجية 
-                   </p>
-                   <p>
-                   <a href="#"><i class="fab fa-facebook fcb social-i"></i></a>
-                   <a href="#"><i class="fab fa-twitter tw social-i"></i></a>
-                   <a href="#"><i class="fab fa-github git social-i"></i></a>
-                   </p>
-                  </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="about-khatwa-blog">
+              <div class="logo-blog d-flex align-items-center">
+                <div><img src="{% static 'img/khatwa-7-100.png' %}" alt="khatwa-blog"></div>
+                <div>
+                  <h3 class="mb-4">مدونة مبادرة خطوة</h3>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-12 col-sm-12">
-                <div class="helper-link">
-                  <h2>روابط مهمة</h2>
-                <ul>
-                <li>
-                    <a href="{% url 'about:about'  %}">عن خطوة</a>
-                  </li>
-                {% for category in categoryes|slice:3 %}
-                  <li>
-                    <a href="{% url 'posts:category' category.name %}">قسم :{{category.name}} </a>
-                  </li>
-                  {% endfor %}
-                  
-                 
-                </ul>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-12 col-sm-12">
-                <div class="subscri">
-                    <h4>اشترك في القائمة البريدية</h4>
-                    <p>لتحصل علي اخر المقالات والاخبار</p>
-                    {% include 'subscrip.html' %}
-                </div>
+              </div>
+              <div class="content-about">
+                <p>
+                  مبادرة خطوة مبادرة تقنية تهتم بمجال البرمجة تقيم المبادرة مسابقات في التخصصات البرمجية
+                </p>
+                <p>
+                  <a href="#"><i class="fab fa-facebook fcb social-i"></i></a>
+                  <a href="#"><i class="fab fa-twitter tw social-i"></i></a>
+                  <a href="#"><i class="fab fa-github git social-i"></i></a>
+                </p>
+              </div>
             </div>
           </div>
+          <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="helper-link">
+              <h2>روابط مهمة</h2>
+              <ul>
+                <li>
+                  <a href="{% url 'about:about'  %}">عن خطوة</a>
+                </li>
+                {% for category in categoryes|slice:3 %}
+                <li>
+                  <a href="{% url 'posts:category' category.name %}">قسم :{{category.name}} </a>
+                </li>
+                {% endfor %}
+
+
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-12 col-sm-12">
+            <div class="subscri">
+              <h4>اشترك في القائمة البريدية</h4>
+              <p>لتحصل علي اخر المقالات والاخبار</p>
+              {% include 'subscrip.html' %}
+            </div>
+          </div>
+        </div>
       </div>
       <hr class="mb-0">
       <div class=" bg-blog p-4">
         <div class="container">
           <div class="copy-right d-flex ">
             <div>
-            جميع الحقوق<span class="copy">&copy;</span> 2020-<script>document.write(new Date().getFullYear());</script> محفوظة <i class="fa icon-fo fa-hand-point-left"></i> لمدونة خطوة
+              جميع الحقوق<span class="copy">&copy;</span> 2020-<script>
+                document.write(new Date().getFullYear());
+              </script> محفوظة <i class="fa icon-fo fa-hand-point-left"></i> لمدونة خطوة
             </div>
             <div>
-           برمجة وصَمَّم بِحُبّ<i class="fa icon-fo fa-heart"></i> مِنْ قِبَلِ <a href="http:beko4learn.com">أَبُوبَكْر هِلَال</a>
+              برمجة وصَمَّم بِحُبّ<i class="fa icon-fo fa-heart"></i> مِنْ قِبَلِ <a
+                href="http:beko4learn.com">أَبُوبَكْر هِلَال</a>
             </div>
           </div>
         </div>
@@ -196,6 +212,15 @@
     </div>
   </footer>
   <!-- end footer-->
+  <button id="dark-mode" class="box-shadow toggle-mode light--hidden">
+     <i class="fa fa-sun "></i>
+    </button>
+  <button id="dark-mode" class="box-shadow toggle-mode dark--hidden">
+      
+      <i class="fa fa-moon "></i>
+    </button>
+  <!-- start dark-mode-->
+  <!-- end dark-mode-->
 
   <!-- lib jquery -->
   <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
@@ -209,4 +234,5 @@
   {% block javascripts %}
   {% endblock javascripts %}
 </body>
+
 </html>

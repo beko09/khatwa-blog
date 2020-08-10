@@ -17,7 +17,7 @@
             <h1> تاكيد عملية المسح </h1>
             <form method="POST" enctype="multipart/form-data">
                {% csrf_token %}
-               <p> هل انت متاكد من انك تود مسح :"{{ object.content }}"?</p>
+               <p> هل انت متاكد من انك تود مسح :"{{ object.get_markdown }}"?</p>
                {% buttons %}
                <div class="submit_btn d-flex justify-content-between">
                   <button class="btn btn-primary " type="submit">تاكيد</button>

@@ -16,18 +16,21 @@
                          <h6 class="mb-0 user-post"> {{ post.user }} </h6>
                      </a>
                  </p>
-                 <p class="mb-0 mr-2">في قسم : </p>
+                 {% if post.category   %}
+                    <p class="mb-0 mr-2">في قسم : </p>
                  <p>
                      <a href="{% url 'posts:category' post.category %}">
                          <h6 class="mb-0 user-post"> {{ post.category }} </h6>
                      </a>
-                 </p>
+                 </p>                    
+                 {% endif %}
+                 
 
              </div>
 
              <p>
                  {% if post.draft %}
-                 <span style="color:red">مسودة</span>
+                 <span style="color:#a65c5c;">مسودة</span>
                  {% endif %}
                  <small>{{ post.publish }}</small>
                  <small>, {{ post.comments.count }} تعليقاّ
@@ -43,7 +46,7 @@
                  </small>
              </p>
              <div class="content-markdown">
-                 <p> {{ post.content|safe|truncatechars_html:70 }}</p>
+                 <p> {{ post.get_markdown|truncatechars_html:70 }}</p>
              </div>
              <div>
                  <a href="{{ post.get_absolute_url }}" class="btn-read">

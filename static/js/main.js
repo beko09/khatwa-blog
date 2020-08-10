@@ -9,6 +9,14 @@ window.onload = function () {
 $(document).ready(function () {
 
 
+  $(".open").click(function () {
+    document.getElementById("Sidenav").style.display = "flex";
+    // document.body.style.overflowX = "hidden";
+  });
+  $(".closebtn").click(function () {
+    document.getElementById("Sidenav").style.display = "none";
+  });
+
   //  markdown
   // $(".content-markdown").each(function () {
   //   let content = $(this).text();
@@ -21,7 +29,8 @@ $(document).ready(function () {
   });
   //  set preview
   let title = $("#id_title");
-  let content = $("#wmd-input-id_content");
+  // let content = $("#wmd-input-id_content");
+  let content = $(".note-editing-area");
   let contentComment = $("#id_content");
   // let image = $("#id_image");
   // console.log(image.val());
@@ -53,7 +62,7 @@ $(document).ready(function () {
     setContent(newContent)
   });
 
-  function setContent(value) {
+  function setContentComment(value) {
     if (value) {
       var markContent = marked(value)
       // $("#preview-content").html('عرض');
@@ -64,13 +73,15 @@ $(document).ready(function () {
       $(this).addClass("embed-responsive");
     });
   };
-  setContent(contentComment.val());
+  setContentComment(contentComment.val());
   contentComment.keyup(function () {
     var newContent = $(this).val()
-    setContent(newContent)
+    setContentComment(newContent)
   });
 
-
+  $("textarea, .content-markdown,.about").attr("dir", "auto");
+  $(".about ,.about p, .about h1, #search").attr("dir", "auto");
+  $(".note-editing-area,.CodeMirror-scroll").attr("dir", "auto");
   // document.getElementById("id_image").onChange = function (evt) {
   //   var tgt = evt.target || window.event.srcElement;
   //   var files = tgt.files;
@@ -166,4 +177,56 @@ $(document).ready(function () {
   }
 
 
+
+
+  //  dark mode
+
+  if (window.CSS && CSS.supports("color", "var(--primary)")) {
+    var toggleColorMode = function toggleColorMode(e) {
+      // Switch to Light Mode
+      if (e.currentTarget.classList.contains("light--hidden")) {
+        // Sets the custom html attribute
+        document.documentElement.setAttribute("color-mode", "light"); // Sets the user's preference in local storage
+
+        localStorage.setItem("color-mode", "light");
+        return;
+      }
+      /* Switch to Dark Mode
+      Sets the custom html attribute */
+      document.documentElement.setAttribute("color-mode", "dark"); // Sets the user's preference in local storage
+
+      localStorage.setItem("color-mode", "dark");
+    }; // Get the buttons in the DOM
+
+    var toggleColorButtons = document.querySelectorAll(".toggle-mode"); // Set up event listeners
+
+    toggleColorButtons.forEach(function (btn) {
+      btn.addEventListener("click", toggleColorMode);
+    });
+  } else {
+    // If the feature isn't supported, then we hide the toggle buttons
+    var btnContainer = document.querySelector(".toggle-mode");
+    btnContainer.style.display = "none";
+  }
+  const currentTheme = localStorage.getItem('color-mode');
+  if (currentTheme) {
+    document.documentElement.setAttribute('color-mode', currentTheme);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 });
+
+

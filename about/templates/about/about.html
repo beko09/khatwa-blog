@@ -1,14 +1,24 @@
 {% extends "base.html" %}
 {% load bootstrap4 %}
+{% block head_extra %}
+    {{ form.media }}
+{% endblock head_extra %}
 {% block content %}
 
 <div class="container">
     <div class="row">
         <div class="mt-3 mb-3 col-lg-8 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
             <div class="blog bg-blog">
-            {% if about_us %}
+            {% if abouts %}
             
-                {{ about_us.about }}
+            {% for about in abouts %}
+                <h1>
+                {{ about.title }}
+                </h1>
+                <div class="about">
+                    {{ about.get_markdown }}
+                </div>
+            {% endfor %}
             {% else %}
                 <p> لا توجد</p>
             {% endif %}

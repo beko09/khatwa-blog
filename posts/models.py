@@ -9,6 +9,11 @@ from django.utils.safestring import mark_safe
 from comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 from .utils import get_red_time
+from time import time
+
+from mdeditor.fields import MDTextField
+
+
 # Create your models here.
 
 
@@ -20,7 +25,8 @@ class PostManager(models.Manager):
 def upload_location(instance, filename):
     # image_name, extension = filename.split(".")
     # return "post/%s/%s.%s" % (instance.id, instance.id, filename)
-    return "post/%s/%s" % (instance.id, filename)
+    # return "post/%s/%s" % (instance.id, filename)
+    return "post/%s/%s" % (str(time()).replace('.','_'), filename)
 
 
 # def image_upload(instance, filename):
@@ -42,7 +48,8 @@ class Post(models.Model):
                               height_field="height_field", width_field="width_field",verbose_name='الصورة')
     height_field = models.IntegerField(default=0,verbose_name='الطول')
     width_field = models.IntegerField(default=0, verbose_name='العرض')
-    content = models.TextField()
+    # content = models.TextField()
+    content =MDTextField()
     draft = models.BooleanField(default=False, verbose_name='مسودة')
     read_time = models.TimeField(blank=True,null=True ,verbose_name='زمن القراءة')
     publish = models.DateField(auto_now=False, auto_now_add=False,verbose_name='زمن الانشاء')

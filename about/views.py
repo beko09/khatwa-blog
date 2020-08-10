@@ -13,11 +13,10 @@ from django.template.loader import get_template
 
 def about(request):
     about_us = Info.objects.all()
-
     context = {
-        'about_us':about_us
+        'abouts':about_us,
     }
-    return render(request, "about/about-us.html", context)
+    return render(request, "about/about.html", context)
 
 
 def newsletter_unsubscribe(request):

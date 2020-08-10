@@ -26,7 +26,7 @@ SECRET_KEY = 'wjb^zsky(cii44ks$)=(8-$g83((1pmat2c+y_5d-gzl-&r0xf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.43.52']
 
 
 # Application definition
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'markdown_deux',
     'social_django',
     'crispy_forms',
-    'django_summernote',
+    'mdeditor',
     # my apps
     'accounts',
     'posts',
@@ -283,45 +283,38 @@ JET_THEMES = [
 JET_SIDE_MENU_COMPACT = True
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-SUMMERNOTE_THEME = 'bs4'  # Show summernote with Bootstrap4
 
-SUMMERNOTE_CONFIG = {
-      'styleWithSpan': False,
-      'styleWithTags': True,
-      'direction': 'ltr',
-# 'toolbar': [
-#         ['style', ['style','code']],
-#         ['para', ['ul', 'ol','paragraph']],
-#         ['insert', ['link','picture','hr']],
-#         ['view', ['fullscreen', 'codeview']],
-#     ],
-      'summernote': {
-      'styleWithSpan': False,
-      'styleWithTags': True,
-      'direction': 'ltr',
-      'toolbar': [
-                ['style',['style','code']],
-                ['font', ['bold', 'underline', 'clear','superscript','subscript']],
-                ['fontname', ['fontname']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen','undo','redo', 'codeview', 'help']],
-        ],
-        # 'lang': 'En-En',
-    'codemirror': {
-                'mode': 'htmlmixed',
-                'lineNumbers': 'true',
-                # You have to include theme file in 'css' or 'css_for_inplace' before using it.
-                'theme': 'flatly',
-            },
-    # 'airMode': True,
-    'css': (
-    ),
-    'js': (
-        '/static/js/main.js'
-    ),
-   
+
+
+MDEDITOR_CONFIGS = {
+    'default':{
+        'width': '100% ',  # Custom edit box width
+        'heigth': 500,  # Custom edit box height
+        # 'toolbar': ["undo", "redo", "|",
+                    # "bold", "del", "italic", "quote", "ucwords", "uppercase", "lowercase", "|",
+        #             "h1", "h2", "h3", "h5", "h6", "|",
+        #             "list-ul", "list-ol", "hr", "|",
+        #             "link", "reference-link", "image", "code", "preformatted-text", "code-block", "table", "datetime"
+        #             "emoji", "html-entities", "pagebreak", "goto-line", "|",
+        #             "help", "info",
+        #             "||", "preview", "watch", "fullscreen"],  # custom edit box toolbar 
+        # 'upload_image_formats': ["jpg", "jpeg", "gif", "png", "bmp", "webp"],  # image upload format type
+        # 'image_folder': 'editor',  # image save the folder name
+        # 'theme': 'default',  # edit box theme, dark / default
+        # 'preview_theme': 'default',  # Preview area theme, dark / default
+        # 'editor_theme': 'default',  # edit area theme, pastel-on-dark / default
+        # 'toolbar_autofixed': True,  # Whether the toolbar capitals
+        # 'search_replace': True,  # Whether to open the search for replacement
+        # 'emoji': True,  # whether to open the expression function
+        # 'tex': True,  # whether to open the tex chart function
+        # 'flow_chart': True,  # whether to open the flow chart function
+        # 'sequence': True, # Whether to open the sequence diagram function
+        # 'watch': True,  # Live preview
+        # 'lineWrapping': False,  # lineWrapping
+        # 'lineNumbers': False,  # lineNumbers
+        'language': 'en',  # zh / en / es 
+    }
+    
 }
-}
+
+
