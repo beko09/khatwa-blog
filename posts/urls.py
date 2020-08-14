@@ -3,7 +3,8 @@ from django.urls import path
 from .views import (
     post_list,  post_detail,
     create_post,  post_update,
-    post_delete,  category_post
+    post_delete, category_post,
+    like_post,
      )
 
 
@@ -15,6 +16,7 @@ urlpatterns = [
     path('detail-post/<str:slug>/delete/', post_delete, name = "post_delete"),
     path('category/<str:name>/', category_post, name="category"),
     path('create-post', create_post , name = "create"),
+    path('like', like_post , name="like"),
     
     
 ]

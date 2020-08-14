@@ -39,32 +39,15 @@
 
 <div class="container">
    <div class="row">
-      <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
+      <div class="col-lg-7 col-md-8 col-sm-12 mx-auto mt-4">
          <article class="bg-blog p-2 mb-2">
             {% if instance.image %}
             <img src="{{ instance.image.url }}" alt=" {{ instance.title }}" class="embed-responsive" />
             {% endif %}
             <h1 class="mt-3"> {{ instance.title }}</h1>
-            <div class="d-flex  flex-row  share">
-               <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
-                  <i class="fab fa-facebook"></i>
-               </a>
- 
-               <a
-                  href="https://twitter.com/share?ref_src{{ request.build_absolute_uri }}">
-                  <i class="fab fa-twitter"></i>
-               </a>
-                  {% comment %} 
-                  href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ instance.title }}&summary={{ instance.description |urlify }}&source={{ request.build_absolute_uri }}"> 
-                  href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}">{% endcomment %}
-               {% comment %} <a
-                  href = "https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}">
-                  <i class="fab fa-linkedin"></i>
-               </a> {% endcomment %}
-               <a href="https://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title }}">
-                  <i class="fab fa-reddit"></i>
-               </a>
-            </div>
+
+           <div class="d-flex detail-post-title">
+
             <div class="author d-flex flex-column">
                <div class="author-image d-flex flex-row">
                   <div class="profile">
@@ -75,7 +58,12 @@
                   </div>
                   <div class="author-name">
                      <a href="{% url 'accounts:profile' instance.user %}">
-                        <h4>{{ instance.user }}</h4>
+                        <h4>
+                        {{ instance.user }}
+                         {% if instance.user.profile.featured_member %}
+                               <svg viewBox="0 0 24 24" title="حساب مميز" aria-label="حساب مميز" class="featured_member"><g><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"></path></g></svg>
+                         {% endif %}
+                        </h4>
                      </a>
                   </div>
                </div>
@@ -107,6 +95,28 @@
                   </small>
                   {% endif %}
             </div>
+             <div class="d-flex  flex-row  share">
+               <a href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri }}">
+                  <i class="fab fa-facebook"></i>
+               </a>
+ 
+               <a
+                  href="https://twitter.com/share?ref_src{{ request.build_absolute_uri }}">
+                  <i class="fab fa-twitter"></i>
+               </a>
+                  {% comment %} 
+                  href="https://www.linkedin.com/shareArticle?mini=true&url={{ request.build_absolute_uri }}&title={{ instance.title }}&summary={{ instance.description |urlify }}&source={{ request.build_absolute_uri }}"> 
+                  href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}">{% endcomment %}
+               {% comment %} <a
+                  href = "https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri }}">
+                  <i class="fab fa-linkedin"></i>
+               </a> {% endcomment %}
+               <a href="https://www.reddit.com/submit?url={{ request.build_absolute_uri }}&title={{ instance.title }}">
+                  <i class="fab fa-reddit"></i>
+               </a>
+            </div>
+            
+           </div>
 
             <div class="content-markdown">
                <p class="content-post"> {{ instance.get_markdown }}</p>
@@ -121,120 +131,176 @@
          {% endif %}
 
 
-
-
-         <div id="x">
-            {% include 'post/comment.html' %}
-         </div>
+         
+                  <div class="bg-blog d-flex flex-row p-2 justify-content-lg-around align-items-center" >
+                           <div class="like-section w-50 text-center container-c-l  d-flex flex-row align-items-center ">
+                              {% include 'post/likes.html' %}
+                           </div>
+                        <div class="w-50  open-comment text-center ">
+                           <div class="container-c-l p-3 cl">
+                             {{ comments.count }}   <svg class="image-total-c-l" id="Capa_1" enable-background="new 0 0 511.072 511.072" height="512" viewBox="0 0 511.072 511.072" width="512" xmlns="http://www.w3.org/2000/svg"><g id="Speech_Bubble_48_"><g><path d="m74.39 480.536h-36.213l25.607-25.607c13.807-13.807 22.429-31.765 24.747-51.246-36.029-23.644-62.375-54.751-76.478-90.425-14.093-35.647-15.864-74.888-5.121-113.482 12.89-46.309 43.123-88.518 85.128-118.853 45.646-32.963 102.47-50.387 164.33-50.387 77.927 0 143.611 22.389 189.948 64.745 41.744 38.159 64.734 89.63 64.734 144.933 0 26.868-5.471 53.011-16.26 77.703-11.165 25.551-27.514 48.302-48.593 67.619-46.399 42.523-112.042 65-189.83 65-28.877 0-59.01-3.855-85.913-10.929-25.465 26.123-59.972 40.929-96.086 40.929zm182-420c-124.039 0-200.15 73.973-220.557 147.285-19.284 69.28 9.143 134.743 76.043 175.115l7.475 4.511-.23 8.727c-.456 17.274-4.574 33.912-11.945 48.952 17.949-6.073 34.236-17.083 46.99-32.151l6.342-7.493 9.405 2.813c26.393 7.894 57.104 12.241 86.477 12.241 154.372 0 224.682-93.473 224.682-180.322 0-46.776-19.524-90.384-54.976-122.79-40.713-37.216-99.397-56.888-169.706-56.888z"/></g></g></svg>
+                           </div>
+                        </div>
+                  </div>
+            
+         
       </div>
 
    </div>
+   
 
+   <div class="comments">
+         {% include 'post/comment.html' %}
+   </div>
 </div>
-</div>
+
+         
+  
 {% endblock content %}
 
 {% block javascripts %}
-<script>
-   $(document).ready(function () {
 
 
-      // using jQuery
-      function getCookie(name) {
-         var cookieValue = null;
-         if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-               var cookie = jQuery.trim(cookies[i]);
-               // Does this cookie string begin with the name we want?
-               if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-               }
-            }
-         }
-         return cookieValue;
-      }
-
-      var csrftoken = getCookie('csrftoken');
-
-      function csrfSafeMethod(method) {
-         // these HTTP methods do not require CSRF protection
-         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-      }
-      $.ajaxSetup({
-         beforeSend: function (xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-               xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-         }
-      });
+<script type="text/javascript">
+$(document).ready(function () {
 
 
 
+        // likes
+      $(document).on('click','.like',function (event) {
+              event.preventDefault();
+              var pk = $(this).attr("value");
+              //var url = $(this).attr("action") || window.location.href;
+              $.ajax({
+                  type: "POST",
+                  url: '{% url "posts:like" %}',
+                  data: {'id':pk,'csrfmiddlewaretoken':'{{ csrf_token }}'},
+                  dataType: 'json',
+                  success: function (data) {
+                    data = data['form']
+                    $(".like-section").html(data);
+                      $(".open-comment").click(function () {
+                        $(".main").addClass("active");
+                     });
+                  },
+                  error: function (e) {
+                    console.log(e);
+                  },
+
+              });
+              //return false;
+            });
+
+
+     
+        
+
+          // using jQuery
+          function getCookie(name) {
+              var cookieValue = null;
+              if (document.cookie && document.cookie !== '') {
+                  var cookies = document.cookie.split(';');
+                  for (var i = 0; i < cookies.length; i++) {
+                      var cookie = jQuery.trim(cookies[i]);
+                      // Does this cookie string begin with the name we want?
+                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                          break;
+                      }
+                  }
+              }
+              return cookieValue;
+          }
+
+          var csrftoken = getCookie('csrftoken');
+
+          function csrfSafeMethod(method) {
+              // these HTTP methods do not require CSRF protection
+              return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+          }
+          $.ajaxSetup({
+              beforeSend: function (xhr, settings) {
+                  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                  }
+              }
+          });
 
 
 
 
 
-      $(document).on('submit', "#comments-form", function (event) {
-         event.preventDefault();
-         var form = $("#comments-form");
-         var formData = form.serialize();
-         var thisURL = form.attr('data-url') || window.location.href // or set your own url
-         $.ajax({
-            type: "POST",
-            url: thisURL,
-            data: formData,
-            cache: false,
-            dataType: 'json',
-            success: function (data) {
-               data = data['form']
-               $("#x").html(data);
-               $("textarea").val(' ');
-            },
-            error: function (e) {
-               console.log(e);
-            },
 
-         });
-         //return false;
-      });
+          $(document).on('submit', '.comments-form', function (event) {
+              event.preventDefault();
+              var form = $(".comments-form");
+              var formData = form.serialize();
+              var thisURL = form.attr('data-url') || window.location.href // or set your own url
+              $.ajax({
+                  type: "POST",
+                  url: thisURL,
+                  data: formData,
+                  cache: false,
+                  dataType: 'json',
+                  success: function (data) {
+                      data = data['form']
+                      $(".comments").html(data);
+                      $("textarea").val(' ');
+                      $(".comment-reply-btn").click(function (e) {
+                        e.preventDefault();
+                          $(this).parent().next(".comment-reply").fadeToggle();
+                        });
+                      $("textarea").val(' ');
+                        $(".closeComment").click(function () {
+                           $(".main").removeClass("active");
+                        });
+                  },
+                  error: function (e) {
+                      console.log(e);
+                  },
 
-
-
-      $(document).on('submit', "#reply-form", function (event) {
-         event.preventDefault();
-         var form2 = $("#reply-form");
-         var formData = form2.serialize();
-         var thisURL = form2.attr('data-url') || window.location.href // or set your own url
-         $.ajax({
-            type: "POST",
-            url: thisURL,
-            data: formData,
-            cache: false,
-            dataType: 'json',
-            success: function (data) {
-               data = data['form']
-               $("#x").html(data);
-               //$("textarea").val(' ');
-               $(".comment-reply-btn").click(function (event) {
-                  event.preventDefault();
-                  $(this).parent().parent().next(".comment-reply").fadeToggle();
-                  //$(".comment-reply").fadeToggle();
-               });
-               $("textarea").val(' ');
-            },
-            error: function (e) {
-               console.log(e);
-            },
-
-         });
-         //return false;
-      });
+              });
+              //return false;
+          });
 
 
-   });
+
+          $(document).on('submit', '.reply-form', function (event) {
+              event.preventDefault();
+              //var form2 = $(".reply-form");
+              var formData = $(this).serialize();
+              var thisURL = $(this).attr('data-url') || window.location.href // or set your own url
+              $.ajax({
+                  type: "POST",
+                  url: thisURL,
+                  data: formData,
+                  cache: false,
+                  dataType: 'json',
+                  success: function (data) {
+                      data = data['form']
+                      $(".comments").html(data);
+                      //$("textarea").val(' ');
+                    $("textarea").val(' ');
+                      $(".comment-reply-btn").click(function (e) {
+                        e.preventDefault();
+                          $(this).parent().next(".comment-reply").fadeToggle();
+                        });
+                       $(".closeComment").click(function () {
+                           $(".main").removeClass("active");
+                        });
+                      $("textarea").val(' ');
+                  },
+                  error: function (e) {
+                      console.log(e);
+                  },
+
+              });
+              //return false;
+          });
+
+
+
+
+        });
 </script>
-
 {% endblock javascripts %}

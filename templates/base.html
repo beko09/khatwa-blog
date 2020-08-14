@@ -54,6 +54,7 @@
 
 <body>
   {% include 'loder.html' %}
+ 
   <header class="bg-blog">
     <div class="container">
       <div class="header">
@@ -78,7 +79,7 @@
           <a class="nav-link" href="{% url 'posts:post_list'  %}">المقالات</a>
           <a class="nav-link" href="{% url 'about:about' %}">عن خطوة</a>
           {% if perms.posts.add_post %}
-          <a class="nav-link" href="{% url 'posts:create'  %}">انشاء</a>
+          <a class="nav-link" href="{% url 'posts:create'  %}"> انشاء مقال </a>
           {% endif %}
           <div class=" dropdown">
 
@@ -136,10 +137,11 @@
     </div>
   </header>
   {% include 'message_display.html' %}
+   <div class="main">
   {% block content %}
 
   {% endblock content %}
-
+</div>
 
 
   <!-- start footer -->
@@ -222,6 +224,7 @@
   <!-- start dark-mode-->
   <!-- end dark-mode-->
 
+
   <!-- lib jquery -->
   <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
   <!-- lib popper -->
@@ -229,10 +232,13 @@
   <!-- lib bootstrao -->
   <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <!--  main js -->
+  <script src="{% static 'js/ajax.js' %}"></script>
   <script src="{% static 'js/main.js' %}"></script>
   <script src="{% static 'js/marked.js' %}"></script>
   {% block javascripts %}
+  
   {% endblock javascripts %}
+  
 </body>
 
 </html>

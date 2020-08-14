@@ -47,10 +47,12 @@
               {% bootstrap_form form %}
               <input type="submit" value="دخول" class="btn-blog w-100" />
               <input type="hidden" name="next" value="{{ next }}" />
+          <p>
+          <small> ليس لديك حساب <a href="{% url 'accounts:register' %}"><small>انضم الي الألأف من مجمتع خطوة</small></a></small>
+          </p>
             </div>
           </div>
         </form>
-
 
       </div>
       {# Assumes you setup the password_reset view in your URLconf #}

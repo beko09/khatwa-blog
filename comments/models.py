@@ -53,6 +53,12 @@ class Comment(models.Model):
         return mark_safe(markdown_text)
     
 
+    @property
+    def get_content_type(self):
+        instance = self
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        return content_type.model
+
     def __str__(self):
         return self.user.username
 

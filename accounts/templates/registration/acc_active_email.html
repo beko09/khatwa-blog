@@ -1,0 +1,8 @@
+{% autoescape off %}
+اهلا {{ user.username }},
+يرجى الضغط على الرابط لتأكيد تسجيلك,
+http://{{ domain }}{% url 'accounts:activate' uidb64=uid token=token %}
+
+بإخلاص،
+khatwa| فريق مدونة مبادرة خطوة
+{% endautoescape %}

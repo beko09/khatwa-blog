@@ -10,8 +10,9 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=15,verbose_name=' رقم الهاتف')
     image = models.ImageField(upload_to="profile/",
                               default="profile/default.jpg",verbose_name=' الصورة')
-    about_us = models.TextField(max_length=200,verbose_name=' نبذه عنك')
-
+    about_us = models.TextField(max_length=200, verbose_name=' نبذه عنك')
+    job = models.CharField(max_length=100, verbose_name='الوظيفة', blank=True,null=True)
+    featured_member = models.BooleanField(default=False, verbose_name='عضو مميز')
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):
         if created:

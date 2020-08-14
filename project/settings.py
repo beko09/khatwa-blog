@@ -26,7 +26,7 @@ SECRET_KEY = 'wjb^zsky(cii44ks$)=(8-$g83((1pmat2c+y_5d-gzl-&r0xf'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.43.52']
+ALLOWED_HOSTS = ['*','192.168.43.52']
 
 
 # Application definition

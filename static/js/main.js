@@ -10,7 +10,7 @@ $(document).ready(function () {
 
 
   $(".open").click(function () {
-    document.getElementById("Sidenav").style.display = "flex";
+    document.getElementById("Sidenav").style.display = "block";
     // document.body.style.overflowX = "hidden";
   });
   $(".closebtn").click(function () {
@@ -74,7 +74,7 @@ $(document).ready(function () {
     });
   };
   setContentComment(contentComment.val());
-  contentComment.keyup(function () {
+  contentComment.keyup = (() => {
     var newContent = $(this).val()
     setContentComment(newContent)
   });
@@ -119,16 +119,16 @@ $(document).ready(function () {
 
   //  comment and reply
 
-  $(document).on('click', ".comment-reply-btn-thread", function (event) {
-    event.preventDefault();
-    $(".comment-reply").fadeToggle();
-    //$(this).parent().next(".comment-reply").fadeToggle();
-  });
+  // $(document).on('click', ".comment-reply-btn-thread", function (event) {
+  //   event.preventDefault();
+  //   $(".comment-reply").fadeToggle();
+  //   //$(this).parent().next(".comment-reply").fadeToggle();
+  // });
 
-  $(document).on('click', ".comment-reply-btn", function (event) {
-    event.preventDefault();
-    $(this).parent().next(".comment-reply").fadeToggle();
-  });
+  // $(document).on('click', ".comment-reply-btn", function (event) {
+  //   event.preventDefault();
+  //   $(this).parent().next(".comment-reply").fadeToggle();
+  // });
 
 
   // setTimeout(function () {
@@ -165,7 +165,7 @@ $(document).ready(function () {
   //     $(".hide").css("display", "none");
   //   }
   // })
-  var showCode = $(document).on('click', "#comments-form textarea", function (event) {
+  var showCode = $(document).on('click', ".comments-form textarea", function (event) {
     event.preventDefault();
     $(".hide").css("display", "block");
   });
@@ -215,6 +215,18 @@ $(document).ready(function () {
 
 
 
+  // if ($(window).width() < 798) { }
+
+
+  $(".comment-reply-btn-thread").click(function (event) {
+    event.preventDefault();
+    $(".comment-reply-thread").fadeToggle();
+    //$(this).parent().next(".comment-reply").fadeToggle();
+  });
+  $(".comment-reply-btn").click(function (e) {
+    e.preventDefault();
+    $(this).parent().next(".comment-reply").fadeToggle();
+  });
 
 
 
@@ -222,6 +234,28 @@ $(document).ready(function () {
 
 
 
+  var open = document.querySelector(".open-comment");
+  var main = document.querySelector(".main");
+
+  let openComment = $(".open-comment").click(function () {
+    $(".main").addClass("active");
+  });
+  let closeComments = $(".closeComment").click(function () {
+    $(".main").removeClass("active");
+  });
+  // var closeComment = document.querySelector(".closeComment")
+  // if (open) {
+  //   closeComment.addEventListener('click', () => {
+  //     main.classList.remove("active");
+  //   });
+  // }
+
+  //  when we click any pint in windo slide hide
+  window.onclick = function (event) {
+    if (event.target == openComment) {
+      event.hide = closeComments;
+    }
+  }
 
 
 

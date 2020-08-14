@@ -2,7 +2,16 @@
  {% load crispy_forms_tags %}
 
  <div class="bg-blog p-3 mt-2 mb-2">
-    <h4>التعليقات</h4>
+    <div class="d-flex justify-content-between flex-row">
+       <div class="d-flex">
+          <h4>التعليقات </h4>
+          <div class="count-comment m-1">{{ comments.count }}</div>
+       </div>
+       <div>
+         <span class="closeComment  mr-auto">
+         &times;</span>
+       </div>
+    </div>
     {% if request.user.is_authenticated %}
 
     <div class="w-100 preview-com">
@@ -10,12 +19,12 @@
           <p id="preview-content"> </p>
        </div>
     </div>
-    <form id="comments-form" method="POST" enctype="multipart/form-data" data-url="{{instance.get_absolute_url|safe }}">
+    <form class="comments-form" method="POST" enctype="multipart/form-data" data-url="{{instance.get_absolute_url|safe }}">
        {% csrf_token %}
        {{ comment_form|crispy  }}
        {% buttons %}
        <div class="submit_btn">
-          <button class="btn btn-blog w-100" type="submit">تعليق </button>
+          <button type="submit" class="btn btn-blog w-100 comment-send" >تعليق </button>
        </div>
        {% endbuttons %}
     </form>
@@ -28,12 +37,15 @@
        </span>
     </small>
     {% else %}
-    <p>
-       لابد من
-       <a href="{% url 'login'%}?next={{instance.get_absolute_url}}">
-          تسجيل الدخول</a>
-       للتعليق
-       {% endif %}
+    <div>
+      <p>
+         لابد من
+         <a href="{% url 'login'%}?next={{instance.get_absolute_url}}">
+            تسجيل الدخول</a>
+         للتعليق
+      </p>
+    </div>
+    {% endif %}
  </div>
  <div class="dd">
     {% for comment in comments %}
@@ -50,7 +62,12 @@
              </div>
              <div class="author-name">
                 <a href="{% url 'accounts:profile' comment.user %}">
-                   <h6>{{ comment.user }}</h6>
+                   <h6>
+                   {{ comment.user }}
+                   {% if comment.user.profile.featured_member %}
+                               <svg viewBox="0 0 24 24" title="حساب مميز" aria-label="حساب مميز" class="featured_member"><g><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"></path></g></svg>
+                     {% endif %}
+                   </h6>
                 </a>
              </div>
           </div>
@@ -88,7 +105,12 @@
                 </div>
                 <div class="author-name">
                    <a href="{% url 'accounts:profile' child_comment.user %}">
-                      <h6>{{ child_comment.user }}</h6>
+                      <h6>
+                      {{ child_comment.user }}
+                      {% if child_comment.user.profile.featured_member %}
+                               <svg viewBox="0 0 24 24" title="حساب مميز" aria-label="حساب مميز" class="featured_member"><g><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"></path></g></svg>
+                      {% endif %}
+                      </h6>
                    </a>
                 </div>
              </div>
@@ -107,14 +129,14 @@
                 <p id="preview-content"> </p>
              </div>
           </div>
-          <form id="reply-form" method="POST" data-url="{{ instance.get_absolute_url|safe }}"
+          <form class="reply-form" method="POST" data-url="{{ instance.get_absolute_url|safe }}"
              enctype="multipart/form-data" class="form-reply">
              {% csrf_token %}
              {{ comment_form|crispy  }}
              <input type="hidden" name="parent_id" value="{{ comment.id }}" />
              {% buttons %}
              <div class="submit_btn">
-                <button class="btn btn-blog w-100" type="submit">رد
+                <button type="submit" class="btn btn-blog w-100 reply-send">رد
                 </button>
              </div>
              {% endbuttons %}
@@ -128,8 +150,16 @@
                 <a href="https://guides.github.com/features/mastering-markdown/">moer info</a>
              </span>
           </small>
+          {% else %}
+          <small>
+             لابد من
+             <a href="{% url 'login'%}?next={{instance.get_absolute_url}}">
+                تسجيل الدخول</a>
+             للتعليق
+          </small>
           {% endif %}
        </div>
 
     </div>
     {% endfor %}
+</div>

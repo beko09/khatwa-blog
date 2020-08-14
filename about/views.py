@@ -36,29 +36,25 @@ def newsletter_unsubscribe(request):
     table because the email was
 
     """
-    form = NewsletterForm(request.POST or None)
-    if form.is_valid():
-        instance = form.save(commit=False)
-        if NewsLetterUser.objects.filter(email=instance.email).exists():
-            NewsLetterUser.objects.filter(email=instance.email).delete()
-            messages.success(request,f'تم الغاء الاشتراك  ')
-          
-            subject = "شكرا للك"
+    email = request.GET.get("email")
+    if email:
+        if NewsLetterUser.objects.filter(email=email).exists():
+            subject = "شكرا لك"
             from_email = settings.EMAIL_HOST_USER
-            to_email = [instance.email]
-            # with open(settings.BASE_DIR + "/templates/unsub_email.txt") as f:
-            #     signup_message = f.read()
+            to_email = [email]
             signup_message = """ helo wel come """
             message = EmailMultiAlternatives(subject=subject,body=signup_message,from_email=from_email,to=to_email)
             html_template = get_template("about/unsub_email.html").render()
             message.attach_alternative(html_template,"text/html")
             message.send()
+            email_un = NewsLetterUser.objects.filter(email=email)
+            email_un.delete()
+            messages.success(request, f'تم الغاء الاشتراك  ')
+            return redirect("/")
         else:
             messages.warning(request,f'هذا الايميل غير موجود ')
-    context ={
-        'form': form
-    }   
-    return render(request,'about/newsletter_unsubscribe.html', context)
+       
+    return render(request,'about/newsletter_unsubscribe.html', {})
 
 
 
@@ -85,11 +81,13 @@ def control_newsletter(request):
             try:
                 send_mail(subject, message, from_email,email,fail_silently=True)
             except BadHeaderError:
-                return HttpResponse('Invalid header found.')
-            return HttpResponse('Success! Thank you for your message.')
+                messages.warning(request,f'هذا الايميل غير موجود ')
+                return redirect("/control_newsletter")
+            messages.success(request,f'تم ارسال الايميل بنجاح لجميع المشتركين')
+            return redirect("/")
     else:
         form = NewsCreationForm()       
     
-    return render(request, 'about/control_newsletter.html', {'form': form})
+    return render(request, 'about/control_newsletter.html', {'forms': form})
 
 

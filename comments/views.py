@@ -54,7 +54,7 @@ def comment_thread(request, id):
         # print(form.cleaned_data)
         c_type = form.cleaned_data.get("content_type")
         # c = c_type.split('|')[1]
-        # print(c_type)
+        print(c_type)
         content_type = ContentType.objects.get(model='Post')
 
         obj_id = form.cleaned_data.get("object_id")

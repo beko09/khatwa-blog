@@ -59,7 +59,7 @@ def post_list(request):
             Q(content__icontains=query)|
             Q(user__username__icontains=query)
             ).distinct()
-    paginator = Paginator(posts, 5)  # Show 25 contacts per page.
+    paginator = Paginator(posts, 20)  # Show 25 contacts per page.
     page_request_var = 'page-of'
     page_number = request.GET.get(page_request_var)
     page_obj = paginator.get_page(page_number)
@@ -78,9 +78,9 @@ def post_list(request):
 
 def post_detail(request, slug=None):
     instance = get_object_or_404(Post, slug=slug)
-    if instance.publish > timezone.now().date() or instance.draft:
-        if not request.user.is_staff or not request.user.is_superuser:
-            raise Http404
+    # if instance.publish > timezone.now().date() or instance.draft:
+    #     if not request.user.is_staff or not request.user.is_superuser or not request.user.groups.filter(name__in['الكتاب']).existis() :
+    #         raise Http404
     shareing_string = quote_plus(instance.content)
     comments = instance.comments
     initial_data = {
@@ -111,11 +111,16 @@ def post_detail(request, slug=None):
             content=content_data,
             parent = parent_obj
         )
+    is_liked = False
+    if instance.likes.filter(id=request.user.id).exists():
+        is_liked = True
     context = {
         'instance': instance,
         'shareing': shareing_string,
         'comments': comments,
         'comment_form': form,
+        'is_liked': is_liked,
+        'total_likes':instance.total_likes(),
         
             }
     if request.is_ajax():
@@ -185,7 +190,7 @@ def category_post(request, name):
             Q(content__icontains=query)|
             Q(user__username__icontains=query)
             ).distinct()
-    paginator = Paginator(posts, 5)  # Show 25 contacts per page.
+    paginator = Paginator(posts, 20)  # Show 25 contacts per page.
     page_request_var = 'page-of'
     page_number = request.GET.get(page_request_var)
     page_obj = paginator.get_page(page_number)
@@ -194,3 +199,28 @@ def category_post(request, name):
         'page_request_var': page_request_var
             }
     return render(request, 'category/category_list.html', context)
+
+
+
+
+
+def like_post(request):
+    # post = get_object_or_404(Post, id=request.POST.get("post_id"))
+    instance = get_object_or_404(Post, id=request.POST.get('id'))
+    is_liked = False
+    if instance.likes.filter(id=request.user.id).exists():
+        instance.likes.remove(request.user)
+        is_liked = False
+    else:
+        instance.likes.add(request.user)
+        is_liked = True
+    context = {
+        'instance': instance,
+        'is_liked': is_liked,
+        'total_likes':instance.total_likes(),
+        
+            }
+    if request.is_ajax():
+        html = render_to_string('post/likes.html',context,request=request)
+        return JsonResponse({'form': html})
+    # return render(request, 'post/likes.html', context)

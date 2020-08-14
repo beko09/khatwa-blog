@@ -14,6 +14,19 @@
    <div class="row">
       <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
          <div class="bg-blog p-3 mt-3 mb-3">
+         <small class="small">عنوان المقال</small>
+            <a href="{{ comment.content_object.get_absolute_url }}">
+            
+            <h4>{{ comment.content_object }}</h4>
+            </a>
+
+         </div>
+   </div>
+   </div>
+   <div class="row">
+   
+      <div class="col-lg-6 col-md-6 col-sm-12 mx-auto mt-4">
+         <div class="bg-blog p-3 mt-3 mb-3">
             <div>
                <div class="author-image comment-user d-flex flex-row">
                   <div class="profile">
@@ -26,30 +39,21 @@
                   </div>
                   <div class="author-name">
                      <a href="{% url 'accounts:profile' comment.user %}">
-                        <h6>{{ comment.user }}</h6>
+                        <h6>
+                        {{ comment.user }}
+                         {% if comment.user.profile.featured_member %}
+                               <svg viewBox="0 0 24 24" title="حساب مميز" aria-label="حساب مميز" class="featured_member"><g><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"></path></g></svg>
+                          {% endif %}
+                        </h6>
                      </a>
                   </div>
                </div>
                <small>{{ comment.publish_at }}</small>
                <p>{{ comment.get_markdown }}</p>
-               <a href="#" class="comment-reply-btn-thread">
-                  {% if comment.children.count > 0 %}
-                  {{ comment.children.count }} تعليقا
-                  {% elif comment.children.count == 0 %} 0 تعليقا
-                  {% endif %}
-                  <span class="slah">|</span>
-                  رد
-
-                  {% if request.user == comment.user %}
-                  <span class="slah">|</span><a href="{{ comment.get_delete_url }}">
-                     مسح
-                  </a>
-                  {% endif %}
-
-               </a>
+              
             </div>
 
-            <div id="y">
+            <div class="comments-threas">
                {% include "comments/replay-comment.html" %}
             </div>
 
@@ -64,66 +68,71 @@
 
 
 {% block javascripts %}
-<script>
-   $(document).ready(function () {
+
+
+<script type="text/javascript">
+$(document).ready(function () {
+
+
+
+      
+       
+
+          // using jQuery
+          function getCookie(name) {
+              var cookieValue = null;
+              if (document.cookie && document.cookie !== '') {
+                  var cookies = document.cookie.split(';');
+                  for (var i = 0; i < cookies.length; i++) {
+                      var cookie = jQuery.trim(cookies[i]);
+                      // Does this cookie string begin with the name we want?
+                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                          break;
+                      }
+                  }
+              }
+              return cookieValue;
+          }
+
+          var csrftoken = getCookie('csrftoken');
+
+          function csrfSafeMethod(method) {
+              // these HTTP methods do not require CSRF protection
+              return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+          }
+          $.ajaxSetup({
+              beforeSend: function (xhr, settings) {
+                  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                      xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                  }
+              }
+          });
 
 
 
 
 
-      // using jQuery
-      function getCookie(name) {
-         var cookieValue = null;
-         if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-               var cookie = jQuery.trim(cookies[i]);
-               // Does this cookie string begin with the name we want?
-               if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                  break;
-               }
-            }
-         }
-         return cookieValue;
-      }
-
-      var csrftoken = getCookie('csrftoken');
-
-      function csrfSafeMethod(method) {
-         // these HTTP methods do not require CSRF protection
-         return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-      }
-      $.ajaxSetup({
-         beforeSend: function (xhr, settings) {
-            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-               xhr.setRequestHeader("X-CSRFToken", csrftoken);
-            }
-         }
-      });
-
-
-
-
-
-
-
-
-      $(document).on('submit', "#reply-form", function (event) {
+     $(document).on('submit', "#reply-form2", function (event) {
          event.preventDefault();
-         var form = $("#reply-form");
-         var formData = form.serialize();
-         var thisURL = form.attr('data-url') || window.location.href // or set your own url
+         //var form = $("#reply-form2");
+         var formData = $(this).serialize();
+         var thisURL = $(this).attr('action');
          $.ajax({
             type: "POST",
             url: thisURL,
             data: formData,
-            cache: false,
             dataType: 'json',
             success: function (data) {
                data = data['form']
-               $("#y").html(data);
+               $(".comments-threas").html(data);
+               $(".comment-reply-btn-thread").click(function (event) {
+                 event.preventDefault();
+                 $(".comment-reply-thread").fadeToggle();
+              });
                $("textarea").val(' ');
+               
+               //$("textarea").val(' ');
 
             },
             error: function (e) {
@@ -135,7 +144,8 @@
       });
 
 
-   });
-</script>
 
+
+        });
+</script>
 {% endblock javascripts %}

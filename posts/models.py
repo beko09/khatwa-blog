@@ -50,6 +50,7 @@ class Post(models.Model):
     width_field = models.IntegerField(default=0, verbose_name='العرض')
     # content = models.TextField()
     content =MDTextField()
+    likes = models.ManyToManyField(User, verbose_name=("اعجاب"), related_name="likes", blank=True)
     draft = models.BooleanField(default=False, verbose_name='مسودة')
     read_time = models.TimeField(blank=True,null=True ,verbose_name='زمن القراءة')
     publish = models.DateField(auto_now=False, auto_now_add=False,verbose_name='زمن الانشاء')
@@ -82,6 +83,9 @@ class Post(models.Model):
 
     def get_delete_url(self):
         return reverse("posts:post_delete", kwargs={"slug": self.slug})
+
+    def total_likes(self):
+        return self.likes.count()
 
     def get_markdown(self):
         content = self.content

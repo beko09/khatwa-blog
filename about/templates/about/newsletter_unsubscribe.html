@@ -1,38 +1,18 @@
 {% extends 'base.html' %}
-
-{% load crispy_forms_tags %}
-
-
+{% load bootstrap4 %}
 
 {% block content%}
 <div class="container">
-    <div class="subs">
 
-        <div class="row">
-            <div class="col">
-                <h3 class="text-center">الغاءاشترك في القائمة البريدية<h3>
-                        {% if messages %}
-                        {% for message in messages %}
-
-                        <div class="alert alert-{{message.tags}} alert-dismissible fade text-center show" role="alert">
-                            {{message}}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="false">&times;</span>
-                            </button>
-                        </div>
-                        {% endfor %}
-                        {% else%}
-                        <form method="POST" class="formsubs" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="input-group">
-                                {{ form}}
-                                <span class="input-group-btn">
-                                    <button type="submit" class="btn btn-primary editbtn"
-                                        style="margin-top:0 !important;"> الغاء الاشتراك </button>
-                                </span>
-                            </div>
-                        </form>
-                        {% endif %}
+    <div class="row">
+        <div class="mt-3 mb-3 col-lg-8 col-md-6 col-sm-12 mx-auto mt-4 mb-4">
+            <div class="blog bg-blog p-3">
+                <h3 class="text-center mb-3 mt-3">الغاء اشترك في القائمة البريدية<h3>
+                <form method="get" class="w-100 form bg-blog form-email" >
+                    <input  class="form-control" type="email" name="email" value="{{ request.GET.email }}"
+                        placeholder="بريدك الالكتروني">
+                    <button class="btn btn-blog email-btn" type="submit">الغاء الاشتراك</button>
+                </form>
             </div>
         </div>
     </div>

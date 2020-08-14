@@ -44,8 +44,9 @@ class UserForm(forms.ModelForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['phone_number', 'about_us', 'image']
+        fields = ['job','phone_number', 'about_us', 'image']
         labels = {
+            'job':_('الوظيفة'),
             'phone_number': _('رقم الهاتف '),
             'about_us': _(' نبذه عنك'),
             'image': _('الصورة'),
