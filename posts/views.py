@@ -224,3 +224,12 @@ def like_post(request):
         html = render_to_string('post/likes.html',context,request=request)
         return JsonResponse({'form': html})
     # return render(request, 'post/likes.html', context)
+
+
+
+
+
+
+def handler404(request, exception):
+    data = {"hi"}
+    return render(request,'404.html',data)

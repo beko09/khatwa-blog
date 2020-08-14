@@ -136,6 +136,20 @@ pre::-webkit-scrollbar-track {
 pre::-webkit-scrollbar-thumb {
 	background: #63656659;
 }
+.author-post::-webkit-scrollbar {
+	width: 5px;
+
+}
+.author-post::-webkit-scrollbar-track {
+	background: #63656659;
+	border: none;
+	background-color: transparent;
+
+ 
+}
+.author-post::-webkit-scrollbar-thumb {
+	background: #63656659;
+}
 
 .comments::-webkit-scrollbar {
 	width: 7px;
@@ -620,7 +634,10 @@ code {
   margin: 1rem 0;
   align-items: center;
 }
-
+.author-post{
+      height: 27rem;
+    overflow-y: scroll;
+}
 .date {
   align-items: center;
 }
@@ -1364,3 +1381,25 @@ color: #7a7c92;
 
 /*  end page email */
 
+/* start page error */
+.not-found{
+      width: 100%;
+    height: 100vh;
+    background: #0e1e24;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.link-page{
+      background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+
+.link-page-not-found{
+      color: var(--main-color);
+      text-decoration: none;
+}
+
+/* end page error */
