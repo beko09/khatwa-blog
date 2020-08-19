@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from decouple import config
 from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -21,12 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'wjb^zsky(cii44ks$)=(8-$g83((1pmat2c+y_5d-gzl-&r0xf'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
 
-ALLOWED_HOSTS = ['*','192.168.43.52']
+# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=lambda v: [s.strip() for s in v.split(',')])
 
 
 # Application definition
@@ -38,7 +40,7 @@ INSTALLED_APPS = [
     "bootstrap4",
     'pagedown',
     'markdown_deux',
-    'social_django',
+    
     'crispy_forms',
     'mdeditor',
     # my apps
@@ -52,19 +54,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
 ]
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'social_core.backends.google.GoogleOAuth2',
     'social_core.backends.github.GithubOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.facebook.FacebookOAuth2',
-
-    'django.contrib.auth.backends.ModelBackend',
+    'accounts.backends.EmailBackend',
 
     
 )
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -75,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'project.urls'
@@ -83,6 +87,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': ['templates'],
+        # 'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,10 +95,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
                 'about.context_processors.newsletter_singup',
                 'about.context_processors.category_list',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -114,10 +119,10 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'blog',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
         'PORT': '3306',
     }
 }
@@ -161,7 +166,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/var/www/static/'
@@ -173,17 +177,11 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_HOST_USER = 'informationsyst3m@gmail.com'
-# EMAIL_HOST_PASSWORD = 'arhjaddfbhatagpp'
-# EMAIL_USE_TLS = True
-# EMAIL_PORT = '587'
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/accounts/login/'
+LOGIN_URL = '/login/'
 
-LOGOUT_URL = '/accounts/logout'
+LOGOUT_URL = '/logout'
 
 #  markdown
 
@@ -199,7 +197,6 @@ LOCALE_PATHS = (
 )
 ALLOW_UNICODE_SLUGS = True
 
-AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
 
 # PARLER_LANGUAGES = {
 #         None: (
@@ -215,29 +212,33 @@ AUTHENTICATION_BACKENDS = ['accounts.backends.EmailBackend']
 
 
 
-
-SOCIAL_AUTH_GITHUB_KEY = '4559b5b539b46775d4a5'
-SOCIAL_AUTH_GITHUB_SECRET = 'ab4ef797b2b8379b91bb16f5a72c8e5b197c9864'
-
-
-ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
+# SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
+SOCIAL_AUTH_GITHUB_KEY = config('SOCIAL_AUTH_GITHUB_KEY')
+SOCIAL_AUTH_GITHUB_SECRET = config('SOCIAL_AUTH_GITHUB_SECRET')
 
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET')
+
+
+# ACCOUNT_DEFAULT_HTTP_PROTOCOL='https'
 
 
 
-SOCIAL_AUTH_FACEBOOK_KEY = '1177458862608837'  # App ID
-SOCIAL_AUTH_FACEBOOK_SECRET = '3320849d2e03f8d90d1f5501d4cd6b21'  # App Secret
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = config('SOCIAL_AUTH_FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = config('SOCIAL_AUTH_FACEBOOK_SECRET')
 
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'informationsyst3m@gmail.com'
-EMAIL_HOST_PASSWORD = 'arhjaddfbhatagpp'
-DEFAULT_FROM_EMAIL = 'TestSite Team <informationsyst3m@gmail.com>'
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 
 # jet theme

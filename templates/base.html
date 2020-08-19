@@ -136,7 +136,26 @@
       </div>
     </div>
   </header>
+  
   {% include 'message_display.html' %}
+      <div class="hides shows">
+            {% if error %}
+          <div class="alert alert-warning d-flex flex-row justify-content-between">
+            {{ error }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+          {% endif %}
+          {% if success %}
+          <div class="alert alert-success d-flex flex-row justify-content-between">
+            {{ success }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+          {% endif %}
+         </div>
    <div class="main">
   {% block content %}
 
@@ -178,7 +197,7 @@
                 </li>
                 {% for category in categoryes|slice:3 %}
                 <li>
-                  <a href="{% url 'posts:category' category.name %}">قسم :{{category.name}} </a>
+                  <a href="{% url 'posts:category' category.name %}">قسم {{category.name}} </a>
                 </li>
                 {% endfor %}
 
@@ -206,7 +225,7 @@
             </div>
             <div>
               برمجة وصَمَّم بِحُبّ<i class="fa icon-fo fa-heart"></i> مِنْ قِبَلِ <a
-                href="http:beko4learn.com">أَبُوبَكْر هِلَال</a>
+                href="http:beko4learn.com"> فريق أبجد</a>
             </div>
           </div>
         </div>

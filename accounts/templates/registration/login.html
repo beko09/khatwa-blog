@@ -35,20 +35,20 @@
                   class="fab fa-google">
                 </i>
               </a>
-              <a href='{% url "social:begin" "github" %}' class="github btn">تسجيل الدخول باستخدام github<i
+              <a href="{% url 'social:begin' 'github' %}" class="github btn">تسجيل الدخول باستخدام github<i
                   class="fab fa-github">
                 </i>
               </a>
             </div>
             <div class="col-lg-6 col-md-12 col-sm-12 soc">
               <div class="hide-md-lg">
-                <p>أو سجل يدويًا </p>
+                <p class="social-title">أو سجل يدويًا </p>
               </div>
               {% bootstrap_form form %}
               <input type="submit" value="دخول" class="btn-blog w-100" />
               <input type="hidden" name="next" value="{{ next }}" />
           <p>
-          <small> ليس لديك حساب <a href="{% url 'accounts:register' %}"><small>انضم الي الألأف من مجمتع خطوة</small></a></small>
+          <small class="link-reg-log"> ليس لديك حساب <a  href="{% url 'accounts:register' %}"><small class="link-reg-log">انضم الي الألأف من مجمتع خطوة</small></a></small>
           </p>
             </div>
           </div>

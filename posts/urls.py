@@ -6,7 +6,10 @@ from .views import (
     post_delete, category_post,
     like_post,
      )
-
+from django.conf.urls import (
+handler400, handler403, handler404, handler500
+)
+handler404 = 'posts.views.handler404'
 
 app_name = "posts"
 urlpatterns = [

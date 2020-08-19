@@ -32,14 +32,15 @@ def newsletter_singup(request):
     file so that you type what you want
     
     """
+    success = ''
+    error = ''
     form = NewsletterForm(request.POST or None)
     if form.is_valid():
         instance = form.save(commit=False)
         if NewsLetterUser.objects.filter(email=instance.email).exists():
-            messages.warning(request,f'هذا الايميل مشترك مسبقا')
+            error = 'هذا الايميل مشترك مسبقا'
         else:
             instance.save()
-            messages.success(request,f'تم الاشتراك بنجاح ')
             subject = " الاشتراك البريدي"
             from_email = settings.EMAIL_HOST_USER
             to_email = [instance.email]
@@ -51,8 +52,11 @@ def newsletter_singup(request):
             html_template = get_template("about/sign_up_email.html").render()
             message.attach_alternative(html_template,"text/html")
             message.send()
+            return redirect('accounts:login')
     return {
-        'form_subscrip': form
+        'form_subscrip': form,
+        'success': success,
+        'error':error,
     }   
 
 
