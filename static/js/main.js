@@ -16,7 +16,10 @@ $(document).ready(function () {
   $(".closebtn").click(function () {
     document.getElementById("Sidenav").style.display = "none";
   });
-
+  $(".sub-n").on('click', function () {
+    $(".hides").css("display", "block");
+    console.log("hh");
+  });
   //  markdown
   // $(".content-markdown").each(function () {
   //   let content = $(this).text();

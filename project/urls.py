@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path, include 
+from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -23,13 +24,15 @@ urlpatterns = [
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     path('', include('django.contrib.auth.urls')),
     path('', include('accounts.urls', namespace='accounts')),
+    path('', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls,name='admin'),
     path('', include('posts.urls', namespace = 'posts')),
     path('comments/', include('comments.urls', namespace = 'comments')),
     path('', include('about.urls', namespace = 'about')),
-    path('oauth/', include('social_django.urls', namespace='social')),
+    path('oauth/', include('social_django.urls', namespace="social")),
     path('', include('pagedown.urls')),
     path('mdeditor/', include('mdeditor.urls')),
+    # url(r'^oauth/', include('social_django.urls', namespace='social')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

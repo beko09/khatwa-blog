@@ -49,7 +49,8 @@ def newsletter_unsubscribe(request):
             message.send()
             email_un = NewsLetterUser.objects.filter(email=email)
             email_un.delete()
-            messages.success(request, f'تم الغاء الاشتراك  ')
+            if request:
+                messages.success(request, f'تم الغاء الاشتراك  ')
             return redirect("/")
         else:
             messages.warning(request,f'هذا الايميل غير موجود ')

@@ -25,8 +25,8 @@ class PostManager(models.Manager):
 def upload_location(instance, filename):
     # image_name, extension = filename.split(".")
     # return "post/%s/%s.%s" % (instance.id, instance.id, filename)
-    # return "post/%s/%s" % (instance.id, filename)
-    return "post/%s/%s" % (str(time()).replace('.','_'), filename)
+    return "post/%s/%s" % (instance.id, filename)
+    # return "post/%s/%s" % (str(time()).replace('.','_'), filename)
 
 
 # def image_upload(instance, filename):
