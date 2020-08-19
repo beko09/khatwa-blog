@@ -8,7 +8,6 @@ from django.utils.safestring import mark_safe
 
 
 
-
 class CommentManager(models.Manager):
     def all(self):
         qs = super(CommentManager, self).filter(parent=None)
@@ -49,7 +48,7 @@ class Comment(models.Model):
     
     def get_markdown(self):
         content = self.content
-        markdown_text = markdown(content)
+        markdown_text =  markdown(content)
         return mark_safe(markdown_text)
     
 
